@@ -46,13 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\FormWorker.cs" />
+    <Compile Include="Classes\GameWorker.cs" />
+    <Compile Include="Classes\Worker.cs" />
     <Compile Include="FormKrestikiNoliki.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormKrestikiNoliki.Designer.cs">
       <DependentUpon>FormKrestikiNoliki.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IFormWorker.cs" />
+    <Compile Include="Interfaces\IGameWorker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormKrestikiNoliki.resx">
@@ -66,6 +69,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -81,7 +85,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\" />
+    <None Include="Resources\krestik.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nolik.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
