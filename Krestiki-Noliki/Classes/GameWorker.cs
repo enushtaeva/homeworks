@@ -19,7 +19,7 @@ namespace Krestiki_Noliki.Classes
             if (valide != 0) return valide;
             valide = ValideDiagonal(arrfigures, krestik, size, krestikvalue, nolikvalue);
             if (valide != 0) return valide;
-            if(ProverkaNichja(form, arrfigures, krestik, size, krestikvalue, nolikvalue)) return 3;
+            if(ValideStandOf(form, arrfigures, krestik, size, krestikvalue, nolikvalue)) return 3;
             return 0;
         }
         public string StepOfComputer(Form form, string buttontag, int[][] arrfigures, bool krestik, int size, int krestikvalue, int nolikvalue)
@@ -34,6 +34,8 @@ namespace Krestiki_Noliki.Classes
             s = StepStraightDiagonal(arrfigures, krestik, size, krestikvalue, nolikvalue);
             if (s != "") return s;
             s = StepInverseDiagonal(arrfigures, krestik, size, krestikvalue, nolikvalue);
+            if (s != "") return s;
+            s = TryToWin(arrfigures, krestik, size, krestikvalue, nolikvalue);
             if (s != "") return s;
             s = StepOverClickedButton(form, buttontag, arrfigures, krestik, size, krestikvalue, nolikvalue);
             if (s != "") return s;
@@ -597,7 +599,7 @@ namespace Krestiki_Noliki.Classes
             return "";
         }
 
-        private bool ProverkaNichja(Form form, int[][] position, bool krestik, int size, int krestikvalue, int nolikvalue)
+        private bool ValideStandOf(Form form, int[][] position, bool krestik, int size, int krestikvalue, int nolikvalue)
         {
             int count = 0;
             int b1 = 0, b2 = 0;
@@ -668,5 +670,141 @@ namespace Krestiki_Noliki.Classes
 
             return true;
         }
+
+        
+        private string TryToWin(int[][] position, bool krestik, int size, int krestikvalue, int nolikvalue)
+        {
+            if (krestik)
+            {
+                for (int i = 0; i < position.Length; i++)
+                {
+                    if (WinStr(position[i].ToList(),krestik,krestikvalue,nolikvalue))
+                    {
+                        string temp1 = (i + 1).ToString() + (NumberOfNullElement(position[i].ToList()) + 1).ToString();
+                        position[i][NumberOfNullElement(position[i].ToList())] = nolikvalue;
+                        return temp1;
+                    }
+
+                }
+            }
+            else
+            {
+                for (int i = 0; i < position.Length; i++)
+                {
+                    if (WinStr(position[i].ToList(), krestik, krestikvalue, nolikvalue))
+                    {
+                        string temp1 = (i + 1).ToString() + (NumberOfNullElement(position[i].ToList()) + 1).ToString();
+                        position[i][NumberOfNullElement(position[i].ToList())] = krestikvalue;
+                        return temp1;
+                    }
+                }
+            }
+            List<int> temp = new List<int>();
+            for (int i = 0; i < position.Length; i++)
+            {
+                temp = new List<int>();
+                for (int j = 0; j < position.Length; j++)
+                {
+                    temp.Add(position[j][i]);
+
+                }
+                if (krestik)
+                {
+                    if (WinStr(temp, krestik, krestikvalue, nolikvalue))
+                    {
+                        string temp1 = (NumberOfNullElement(temp) + 1).ToString() + (i + 1).ToString();
+                        position[NumberOfNullElement(temp)][i] = nolikvalue;
+                        return temp1;
+                    }
+                }
+                else
+                {
+                    if (WinStr(temp, krestik, krestikvalue, nolikvalue))
+                    {
+                        string temp1 = (NumberOfNullElement(temp) + 1).ToString() + (i + 1).ToString();
+                        position[NumberOfNullElement(temp)][i] = krestikvalue;
+                        return temp1;
+                    }
+                }
+            }
+            temp = new List<int>();
+            for (int i = 0; i < position.Length; i++)
+            {
+
+                for (int j = 0; j < position.Length; j++)
+                {
+                    if (i == j)
+                        temp.Add(position[i][j]);
+
+                }
+            }
+            if (krestik)
+            {
+                if (WinStr(temp, krestik, krestikvalue, nolikvalue))
+                {
+                    string temp1 = (NumberOfNullElement(temp) + 1).ToString() + (NumberOfNullElement(temp) + 1).ToString();
+                    position[NumberOfNullElement(temp)][NumberOfNullElement(temp)] = nolikvalue;
+                    return temp1;
+                }
+            }
+            else
+            {
+                if (WinStr(temp, krestik, krestikvalue, nolikvalue))
+                {
+                    string temp1 = (NumberOfNullElement(temp) + 1).ToString() + (NumberOfNullElement(temp) + 1).ToString();
+                    position[NumberOfNullElement(temp)][NumberOfNullElement(temp)] = krestikvalue;
+                    return temp1;
+                }
+            }
+            temp = new List<int>();
+            for (int i = 0; i < position.Length; i++)
+            {
+
+                for (int j = 0; j < position.Length; j++)
+                {
+                    if ((i + j) == (position.Length - 1))
+                        temp.Add(position[i][j]);
+
+                }
+            }
+            if (krestik)
+            {
+                if (WinStr(temp, krestik, krestikvalue, nolikvalue))
+                {
+                    string temp1 = (NumberOfNullElement(temp) + 1).ToString() + (position.Length - NumberOfNullElement(temp)).ToString();
+                    position[NumberOfNullElement(temp)][position.Length - NumberOfNullElement(temp) - 1] = nolikvalue;
+                    return temp1;
+                }
+            }
+            else
+            {
+                if (WinStr(temp, krestik, krestikvalue, nolikvalue))
+                {
+                    string temp1 = (NumberOfNullElement(temp) + 1).ToString() + (position.Length - NumberOfNullElement(temp)).ToString();
+                    position[NumberOfNullElement(temp)][position.Length - NumberOfNullElement(temp) - 1] = krestikvalue;
+                    return temp1;
+                }
+            }
+            return "";
+        }
+
+        private bool WinStr(IEnumerable<int> arr,bool krestik,int krestikvalue, int nolikvalue)
+        {
+            int count1 = 0, count2 = 0;
+            foreach (int i in arr)
+            {
+                if (krestik)
+                {
+                    if (i == nolikvalue) count1++; if (i == krestikvalue) count2++;
+                }
+                else
+                {
+                    if (i == krestikvalue) count1++; if (i == nolikvalue) count2++;
+                }
+            }
+            if (count1 != 0 && count2 == 0) return true;
+            return false;
+        }
+
     }
 }

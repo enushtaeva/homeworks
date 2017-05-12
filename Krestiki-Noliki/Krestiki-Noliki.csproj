@@ -49,6 +49,7 @@
     <Compile Include="Classes\FormWorker.cs" />
     <Compile Include="Classes\GameWorker.cs" />
     <Compile Include="Classes\Worker.cs" />
+    <Compile Include="Classes\WorkerBox.cs" />
     <Compile Include="FormKrestikiNoliki.cs">
       <SubType>Form</SubType>
     </Compile>

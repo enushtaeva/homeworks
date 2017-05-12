@@ -60,6 +60,18 @@ namespace Krestiki_Noliki.Classes
                     number++;
                 }
             }
+            if (!this.Krestik && this.Start)
+            {
+                Random rand = new Random();
+                int i = rand.Next(0, this.Size - 1),j= rand.Next(0, this.Size - 1);
+                this.ArrayFigures[i][j] = this.KrestikValue;
+                foreach(Button b in this.Buttons)
+                {
+                    if(b.Tag.ToString()[0].ToString()==(i+1).ToString() && (b.Tag.ToString()[1].ToString() == (j + 1).ToString())){
+                        b.BackgroundImage = (Image)Properties.Resources.krestik;
+                    }
+                }
+            }
 
         }
 
@@ -82,8 +94,7 @@ namespace Krestiki_Noliki.Classes
         {
             if (this.Start)
             {
-                int k=this.GameWorker.ValideWinOrWon(form,this.ArrayFigures, krestik, this.Size,this.KrestikValue,this.NolikValue);
-                Valide(k);
+                int k = 0;
                 if (this.Start)
                 {
                     foreach (Control c in form.Controls)
@@ -95,9 +106,14 @@ namespace Krestiki_Noliki.Classes
                             {
                                 ChangeImage((c as Button), krestik);
                                 ChangeFigure(this.Krestik, Convert.ToInt32(c.Tag.ToString()[0].ToString()) - 1, Convert.ToInt32(c.Tag.ToString()[1].ToString()) - 1);
-                                StepOfComputer(form, c.Tag.ToString(), krestik);
                                 k = this.GameWorker.ValideWinOrWon(form, this.ArrayFigures, krestik, this.Size, this.KrestikValue, this.NolikValue);
                                 Valide(k);
+                                if (this.Start)
+                                {
+                                    StepOfComputer(form, c.Tag.ToString(), krestik);
+                                    k = this.GameWorker.ValideWinOrWon(form, this.ArrayFigures, krestik, this.Size, this.KrestikValue, this.NolikValue);
+                                    Valide(k);
+                                }
                             }
                         }
                     }
