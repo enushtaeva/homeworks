@@ -43,6 +43,8 @@ namespace Krestiki_Noliki.Classes
             if (s != "") return s;
             return s;
         }
+
+        #region PrivateSection
         //Делает ход в одном столбце или строке с поставленной пользователем фигурой
         private string StepOverClickedButton(Form form, string buttontag, int[][] position, bool krestik, int size, int krestikvalue, int nolikvalue)
         {
@@ -805,6 +807,8 @@ namespace Krestiki_Noliki.Classes
             if (count1 != 0 && count2 == 0) return true;
             return false;
         }
+
+        #endregion
 
     }
 }

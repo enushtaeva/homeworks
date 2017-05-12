@@ -151,6 +151,7 @@ namespace Krestiki_Noliki.Classes
             }
         }
 
+        #region PrivateSection
         private void Valide(int k)
         {
             switch (k)
@@ -185,9 +186,9 @@ namespace Krestiki_Noliki.Classes
             }
             
         }
+        #endregion
 
 
 
-       
     }
 }
