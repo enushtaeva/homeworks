@@ -1,4 +1,5 @@
-﻿using Krestiki_Noliki.Interfaces;
+﻿using Krestiki_Noliki.Classes.Exceptins;
+using Krestiki_Noliki.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -90,20 +91,24 @@ namespace Krestiki_Noliki.Classes
         }
 
 
-        public override void Click(Form form,string name,bool krestik)
+        public override void Click(Form form,string name,bool krestik) 
         {
-            if (this.Start)
+           if (!this.Start)
             {
-                int k = 0;
-                if (this.Start)
-                {
+                throw new NotStartException(this.Start);
+            }
+
+                   int k = 0;
+                
                     foreach (Control c in form.Controls)
                     {
                         if (!(c is Button)) continue;
                         if (c.Name == name)
                         {
-                            if ((c as Button).BackgroundImage == null)
-                            {
+                            if ((c as Button).BackgroundImage != null)
+                                {
+                                    throw new ButtonOccupiedException((c as Button).BackgroundImage);
+                                }
                                 ChangeImage((c as Button), krestik);
                                 ChangeFigure(this.Krestik, Convert.ToInt32(c.Tag.ToString()[0].ToString()) - 1, Convert.ToInt32(c.Tag.ToString()[1].ToString()) - 1);
                                 k = this.GameWorker.ValideWinOrWon(form, this.ArrayFigures, krestik, this.Size, this.KrestikValue, this.NolikValue);
@@ -114,17 +119,11 @@ namespace Krestiki_Noliki.Classes
                                     k = this.GameWorker.ValideWinOrWon(form, this.ArrayFigures, krestik, this.Size, this.KrestikValue, this.NolikValue);
                                     Valide(k);
                                 }
-                            }
+                            
                         }
                     }
-                   
-                   
-                }
-            }
-            else
-            {
-                MessageBox.Show("Вы не нажали кнопку старт", "Error");
-            }
+ 
+            
         }
 
         public override void StepOfComputer(Form form, string buttontag, bool krestik)

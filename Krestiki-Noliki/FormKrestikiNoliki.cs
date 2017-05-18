@@ -1,4 +1,5 @@
 ﻿using Krestiki_Noliki.Classes;
+using Krestiki_Noliki.Classes.Exceptins;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,8 +30,19 @@ namespace Krestiki_Noliki
 
         private void buttonGame_Click(object sender, EventArgs e)
         {
-            worker.FormWorker.Click(this, (sender as Button).Name, worker.FormWorker.Krestik);
-            if (!worker.FormWorker.Start) comboBox1.Enabled = true;
+            try {
+                
+                worker.FormWorker.Click(this, (sender as Button).Name, worker.FormWorker.Krestik);
+                if (!worker.FormWorker.Start) comboBox1.Enabled = true;
+            }
+            catch(NotStartException ex)
+            {
+                MessageBox.Show(ex.Message+" Start= "+ex.Start, "Error");
+            }
+            catch(ButtonOccupiedException ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -75,5 +87,6 @@ namespace Krestiki_Noliki
                     break;
             }
         }
+
     }
 }

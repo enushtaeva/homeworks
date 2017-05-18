@@ -46,8 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Exceptins\ButtonOccupiedException.cs" />
+    <Compile Include="Classes\Exceptins\NotStartException.cs" />
     <Compile Include="Classes\FormWorker.cs" />
     <Compile Include="Classes\GameWorker.cs" />
+    <Compile Include="Classes\Statistics\Statistic.cs" />
     <Compile Include="Classes\Worker.cs" />
     <Compile Include="Classes\WorkerBox.cs" />
     <Compile Include="FormKrestikiNoliki.cs">
