@@ -25,8 +25,14 @@ namespace Krestiki_Noliki
 
         private void FormKrestikiNoliki_Load(object sender, EventArgs e)
         {
-              worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup,ImageLayout.Zoom);
+            try {
+                worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
                 comboBox1.SelectedItem = comboBox1.Items[0];
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         private void buttonGame_Click(object sender, EventArgs e)
@@ -49,44 +55,56 @@ namespace Krestiki_Noliki
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            worker.FormWorker.Start = true;
-            comboBox1.Enabled = false;
-            worker.FormWorker.Krestik = radioButtonKrest.Checked;
-            switch (worker.FormWorker.Size)
+            try {
+                worker.FormWorker.Start = true;
+                comboBox1.Enabled = false;
+                worker.FormWorker.Krestik = radioButtonKrest.Checked;
+                switch (worker.FormWorker.Size)
+                {
+                    case 3:
+                        worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        break;
+                    case 4:
+                        worker.FormWorker.BuildPlayingFuild(this, 270, 90, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        break;
+                    case 5:
+                        worker.FormWorker.BuildPlayingFuild(this, 210, 30, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
             {
-                case 3:
-                    worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
-                    break;
-                case 4:
-                    worker.FormWorker.BuildPlayingFuild(this, 270, 90, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
-                    break;
-                case 5:
-                    worker.FormWorker.BuildPlayingFuild(this, 210, 30, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
-                    break;
-                default:
-                    break;
+                MessageBox.Show(ex.Message, "Error");
             }
            
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch((sender as ComboBox).SelectedItem.ToString())
+            try {
+                switch ((sender as ComboBox).SelectedItem.ToString())
+                {
+                    case "3x3":
+                        worker.FormWorker.Size = 3;
+                        worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        break;
+                    case "4x4":
+                        worker.FormWorker.Size = 4;
+                        worker.FormWorker.BuildPlayingFuild(this, 270, 90, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        break;
+                    case "5x5":
+                        worker.FormWorker.Size = 5;
+                        worker.FormWorker.BuildPlayingFuild(this, 210, 30, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
             {
-                case "3x3":
-                    worker.FormWorker.Size = 3;
-                    worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
-                    break;
-                case "4x4":
-                    worker.FormWorker.Size = 4;
-                    worker.FormWorker.BuildPlayingFuild(this, 270, 90, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
-                    break;
-                case "5x5":
-                    worker.FormWorker.Size = 5;
-                    worker.FormWorker.BuildPlayingFuild(this, 210, 30, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
-                    break;
-                default:
-                    break;
+                MessageBox.Show(ex.Message, "Error");
             }
         }
 
