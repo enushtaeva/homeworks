@@ -49,7 +49,9 @@ namespace Krestiki_Noliki.Classes
         //Делает ход в одном столбце или строке с поставленной пользователем фигурой
         private string StepOverClickedButton(Form form, string buttontag, int[][] position, bool krestik, int size, int krestikvalue, int nolikvalue)
         {
-            foreach(Control c in form.Controls)
+
+    
+            foreach (Control c in form.Controls)
             {
                 if (!(c is TabControl)) continue;
                 TabCont = c as TabControl;
@@ -585,6 +587,11 @@ namespace Krestiki_Noliki.Classes
         private string RandomHod(Form form,  int[][] position, bool krestik, int size, int krestikvalue, int nolikvalue)
         {
             foreach (Control c in form.Controls)
+            {
+                if (!(c is TabControl)) continue;
+                TabCont = c as TabControl;
+            }
+            foreach (Control c in TabCont.TabPages[0].Controls)
             {
                 if (!(c is Button) || c.Tag == null) continue;
                 Button button = c as Button;
