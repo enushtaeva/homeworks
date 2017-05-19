@@ -79,5 +79,17 @@ namespace Krestiki_Noliki.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;users&gt;
+        ///  
+        ///&lt;/users&gt;.
+        /// </summary>
+        internal static string pom {
+            get {
+                return ResourceManager.GetString("pom", resourceCulture);
+            }
+        }
     }
 }

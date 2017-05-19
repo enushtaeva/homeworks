@@ -11,6 +11,7 @@ namespace Krestiki_Noliki.Classes
 {
     class GameWorker :  IGameWorker
     {
+        public TabControl TabCont { get; set; }
         public int ValideWinOrWon(Form form,int[][] arrfigures,bool krestik, int size,int krestikvalue,int nolikvalue)
         {
             int valide = ValideStrings(arrfigures, krestik, size, krestikvalue, nolikvalue);
@@ -48,8 +49,12 @@ namespace Krestiki_Noliki.Classes
         //Делает ход в одном столбце или строке с поставленной пользователем фигурой
         private string StepOverClickedButton(Form form, string buttontag, int[][] position, bool krestik, int size, int krestikvalue, int nolikvalue)
         {
-
-            foreach (Control c in form.Controls)
+            foreach(Control c in form.Controls)
+            {
+                if (!(c is TabControl)) continue;
+                TabCont = c as TabControl;
+            }
+            foreach (Control c in TabCont.TabPages[0].Controls)
             {
                 if (!(c is Button) || c.Tag==null) continue;
                 Button button = (c as Button);
@@ -606,6 +611,11 @@ namespace Krestiki_Noliki.Classes
             int count = 0;
             int b1 = 0, b2 = 0;
             foreach (Control c in form.Controls)
+            {
+                if (!(c is TabControl)) continue;
+                TabCont = c as TabControl;
+            }
+            foreach (Control c in TabCont.TabPages[0].Controls)
             {
                 if (!(c is Button) || c.Tag == null) continue;
                 if ((c as Button).BackgroundImage == null) count++;

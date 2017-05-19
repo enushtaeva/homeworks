@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace Krestiki_Noliki
 {
@@ -23,9 +25,8 @@ namespace Krestiki_Noliki
 
         private void FormKrestikiNoliki_Load(object sender, EventArgs e)
         {
-  
-            worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup,ImageLayout.Zoom);
-            comboBox1.SelectedItem = comboBox1.Items[0];
+              worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup,ImageLayout.Zoom);
+                comboBox1.SelectedItem = comboBox1.Items[0];
         }
 
         private void buttonGame_Click(object sender, EventArgs e)
@@ -39,10 +40,11 @@ namespace Krestiki_Noliki
             {
                 MessageBox.Show(ex.Message+" Start= "+ex.Start, "Error");
             }
-            catch(ButtonOccupiedException ex)
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
+            
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -88,5 +90,9 @@ namespace Krestiki_Noliki
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            throw new Exception();
+        }
     }
 }

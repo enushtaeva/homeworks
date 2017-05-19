@@ -50,7 +50,9 @@
     <Compile Include="Classes\Exceptins\NotStartException.cs" />
     <Compile Include="Classes\FormWorker.cs" />
     <Compile Include="Classes\GameWorker.cs" />
+    <Compile Include="Classes\Statistics\IXmlWorker.cs" />
     <Compile Include="Classes\Statistics\Statistic.cs" />
+    <Compile Include="Classes\Statistics\XmlWorker.cs" />
     <Compile Include="Classes\Worker.cs" />
     <Compile Include="Classes\WorkerBox.cs" />
     <Compile Include="FormKrestikiNoliki.cs">
@@ -93,6 +95,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\nolik.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Classes\Statistics\StatisticFile\pom.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
