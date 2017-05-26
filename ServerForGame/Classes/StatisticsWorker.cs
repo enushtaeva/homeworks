@@ -21,14 +21,8 @@ namespace ServerForGame.Classes
         public List<Statistic> ValidateData(string path)
         {
             List<Statistic> statistics;
-            try
-            {
-                statistics = JsonWorker.GetData(path);
-            }
-            catch
-            {
-                statistics = new List<Statistic>();
-            }
+            statistics = JsonWorker.GetData(path);
+            if (statistics == null) statistics = new List<Statistic>();
             if (statistics.Count < 2)
             {
                 if (statistics.Where(a => a.Login == "Пользователь").Count() == 0) statistics.Add(new Statistic() { Login = "Пользователь", Win = 0, Won = 0, NF = 0 });

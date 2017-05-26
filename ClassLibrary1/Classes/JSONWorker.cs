@@ -17,8 +17,8 @@ namespace ClassLibrary1
                 JsonSerializer serializer = new JsonSerializer();
                 using (StreamReader file = new StreamReader(new FileStream(path, FileMode.OpenOrCreate)))
                 {
-
                     return (List<T>)serializer.Deserialize(file, typeof(List<T>));
+
 
                 }
             }
