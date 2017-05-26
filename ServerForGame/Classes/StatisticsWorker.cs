@@ -77,7 +77,8 @@ namespace ServerForGame.Classes
             List<StatisticOnTask> statistics = JsonWorkerTask.GetData(path);
             statistics.Add(stat);
             JsonWorkerTask.WriteData(statistics, path);
-            HubWorker.BroadcastObjectTask(statistics);
+            int pr=Convert.ToInt32(((float)statistics.Where(a => a.Result == 0).Count() / (float)statistics.Count()) * 100);
+            HubWorker.BroadcastObjectTask(statistics,pr);
         }
 
         #region PrivateSection

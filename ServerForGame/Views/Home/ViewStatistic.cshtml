@@ -27,6 +27,9 @@
         </tr>
     }
 </table>
+<br />
+<p style="margin-left:200px">Процент выигрышей пользователя:</p>
+<p style="display:block; margin-left:400px; font-size:24px;color:#0094ff;margin-bottom:50px;" id="proc">@ViewBag.Message</p>
 @section scripts {
 
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
@@ -34,7 +37,10 @@
     <script src="~/signalr/hubs"></script>
     <script type="text/javascript">
     var chat = $.connection.statisticHub;
-    // Create a function that the hub can call to broadcast messages.
+        // Create a function that the hub can call to broadcast messages.
+    chat.client.updateprocents = function (data) {
+        $("#proc").text(data);
+    }
     chat.client.updateStatisticTask = function (data) {
         console.log(data);
         $("#mt tbody").find("tr:gt(0)").remove();

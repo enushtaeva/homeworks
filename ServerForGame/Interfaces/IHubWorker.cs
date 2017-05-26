@@ -9,6 +9,6 @@ namespace ServerForGame.Interfaces
     public interface IHubWorker
     {
         void BroadcastObject(Object obj);
-        void BroadcastObjectTask(object obj);
+        void BroadcastObjectTask(object obj, int count);
     }
 }

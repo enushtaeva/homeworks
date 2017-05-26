@@ -3,13 +3,13 @@
   <user>
     <login>Пользователь</login>
     <win>5</win>
-    <won>54</won>
-    <nf>15</nf>
+    <won>60</won>
+    <nf>19</nf>
   </user>
   <user>
     <login>Компьютер</login>
-    <win>54</win>
+    <win>60</win>
     <won>5</won>
-    <nf>15</nf>
+    <nf>19</nf>
   </user>
 </ArrayOfUser>

@@ -148,10 +148,80 @@
     <timetoplay>18111036</timetoplay>
   </statistic>
   <statistic>
-    <datefstart>2017-05-27T00:59:06.5155029+03:00</datefstart>
+    <datefstart>2017-05-27T00:59:06</datefstart>
     <result>1</result>
     <figure>0</figure>
     <cuntofstep>3</cuntofstep>
-    <timetoplay>52172984</timetoplay>
+    <timetoplay>40332307</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-27T01:32:32</datefstart>
+    <result>1</result>
+    <figure>0</figure>
+    <cuntofstep>3</cuntofstep>
+    <timetoplay>17020973</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-27T01:32:40</datefstart>
+    <result>2</result>
+    <figure>0</figure>
+    <cuntofstep>4</cuntofstep>
+    <timetoplay>30811763</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-27T01:32:55</datefstart>
+    <result>1</result>
+    <figure>0</figure>
+    <cuntofstep>3</cuntofstep>
+    <timetoplay>28591635</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-27T01:33:03</datefstart>
+    <result>2</result>
+    <figure>0</figure>
+    <cuntofstep>4</cuntofstep>
+    <timetoplay>38472200</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-27T01:34:29</datefstart>
+    <result>1</result>
+    <figure>0</figure>
+    <cuntofstep>3</cuntofstep>
+    <timetoplay>19061090</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-27T01:35:45</datefstart>
+    <result>1</result>
+    <figure>0</figure>
+    <cuntofstep>3</cuntofstep>
+    <timetoplay>22871308</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-27T01:37:33</datefstart>
+    <result>1</result>
+    <figure>0</figure>
+    <cuntofstep>3</cuntofstep>
+    <timetoplay>18801075</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-27T01:38:26</datefstart>
+    <result>2</result>
+    <figure>0</figure>
+    <cuntofstep>11</cuntofstep>
+    <timetoplay>77864453</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-27T01:38:43</datefstart>
+    <result>2</result>
+    <figure>0</figure>
+    <cuntofstep>10</cuntofstep>
+    <timetoplay>83944801</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-27T01:39:46.7700775+03:00</datefstart>
+    <result>1</result>
+    <figure>0</figure>
+    <cuntofstep>9</cuntofstep>
+    <timetoplay>79794564</timetoplay>
   </statistic>
 </ArrayOfStatistic>
