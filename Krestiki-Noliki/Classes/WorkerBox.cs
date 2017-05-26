@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClassLibrary1;
+using Krestiki_Noliki.Classes.Server.Interfaces;
+using Krestiki_Noliki.Classes.Server.Classes;
 
 namespace Krestiki_Noliki.Classes
 {
@@ -12,12 +15,14 @@ namespace Krestiki_Noliki.Classes
     {
         public IGameWorker GameWorker { get; private set; }
         public IXmlWorker<Statistic> XmlWorker { get; private set; }
+        public IServerWorker<Statistic> ServerWorker { get; private set; }
         public Worker FormWorker { get; set; }
         public WorkerBox()
         {
             this.GameWorker = new GameWorker();
             this.XmlWorker = new XmlWorker<Statistic>();
-            this.FormWorker = new FormWorker(this.GameWorker,this.XmlWorker);
+            this.ServerWorker = new ServerWorker<Statistic>();
+            this.FormWorker = new FormWorker(this.GameWorker,this.XmlWorker,this.ServerWorker);
         }
     }
 }

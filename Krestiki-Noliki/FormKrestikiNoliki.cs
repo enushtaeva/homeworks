@@ -1,13 +1,21 @@
-﻿using Krestiki_Noliki.Classes;
+﻿using ClassLibrary1;
+using Krestiki_Noliki.Classes;
 using Krestiki_Noliki.Classes.Exceptins;
+using Krestiki_Noliki.Classes.Statistics;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -26,7 +34,7 @@ namespace Krestiki_Noliki
         private void FormKrestikiNoliki_Load(object sender, EventArgs e)
         {
             try {
-                worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                worker.FormWorker.BuildPlayingFuild(this, 80, 100, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
                 comboBox1.SelectedItem = comboBox1.Items[0];
             }
             catch(Exception ex)
@@ -62,13 +70,13 @@ namespace Krestiki_Noliki
                 switch (worker.FormWorker.Size)
                 {
                     case 3:
-                        worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        worker.FormWorker.BuildPlayingFuild(this, 80, 100, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
                         break;
                     case 4:
-                        worker.FormWorker.BuildPlayingFuild(this, 270, 90, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        worker.FormWorker.BuildPlayingFuild(this, 50, 80, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
                         break;
                     case 5:
-                        worker.FormWorker.BuildPlayingFuild(this, 210, 30, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        worker.FormWorker.BuildPlayingFuild(this, 10, 10, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
                         break;
                     default:
                         break;
@@ -88,15 +96,15 @@ namespace Krestiki_Noliki
                 {
                     case "3x3":
                         worker.FormWorker.Size = 3;
-                        worker.FormWorker.BuildPlayingFuild(this, 330, 150, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        worker.FormWorker.BuildPlayingFuild(this, 80, 100, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
                         break;
                     case "4x4":
                         worker.FormWorker.Size = 4;
-                        worker.FormWorker.BuildPlayingFuild(this, 270, 90, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        worker.FormWorker.BuildPlayingFuild(this, 50, 80, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
                         break;
                     case "5x5":
                         worker.FormWorker.Size = 5;
-                        worker.FormWorker.BuildPlayingFuild(this, 210, 30, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
+                        worker.FormWorker.BuildPlayingFuild(this, 10, 10, 120, 120, "gameButton", Color.White, buttonGame_Click, FlatStyle.Popup, ImageLayout.Zoom);
                         break;
                     default:
                         break;
@@ -112,5 +120,24 @@ namespace Krestiki_Noliki
         {
             throw new Exception();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Thread mythread = new Thread(GetData);
+            mythread.Start();
+        }
+
+        private void GetData()
+        {
+            try
+            {
+                worker.FormWorker.GetDataFromServer(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+       
     }
 }

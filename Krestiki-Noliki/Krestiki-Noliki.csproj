@@ -33,6 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClassLibrary1">
+      <HintPath>..\ClassLibrary1\bin\Release\ClassLibrary1.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ServerForGame\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,8 +57,9 @@
     <Compile Include="Classes\Exceptins\NotStartException.cs" />
     <Compile Include="Classes\FormWorker.cs" />
     <Compile Include="Classes\GameWorker.cs" />
+    <Compile Include="Classes\Server\Classes\ServerWorker.cs" />
+    <Compile Include="Classes\Server\Interfaces\IServerWorker.cs" />
     <Compile Include="Classes\Statistics\IXmlWorker.cs" />
-    <Compile Include="Classes\Statistics\Statistic.cs" />
     <Compile Include="Classes\Statistics\XmlWorker.cs" />
     <Compile Include="Classes\Worker.cs" />
     <Compile Include="Classes\WorkerBox.cs" />

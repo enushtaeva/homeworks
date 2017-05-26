@@ -1,5 +1,5 @@
 ﻿using Krestiki_Noliki.Classes.Exceptins;
-using Krestiki_Noliki.Classes.Statistics;
+using ClassLibrary1;
 using Krestiki_Noliki.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Krestiki_Noliki.Classes.Statistics;
+using Newtonsoft.Json;
+using System.Net;
+using System.Collections.Specialized;
+using Krestiki_Noliki.Classes.Server.Classes;
+using Krestiki_Noliki.Classes.Server.Interfaces;
 
 namespace Krestiki_Noliki.Classes
 {
@@ -22,10 +28,11 @@ namespace Krestiki_Noliki.Classes
             this.GameWorker = worker;
         }
 
-        public FormWorker(IGameWorker worker,IXmlWorker<Statistic> xmlworker)
+        public FormWorker(IGameWorker worker,IXmlWorker<Statistic> xmlworker,IServerWorker<Statistic> serverWorker)
         {
             this.GameWorker = worker;
             this.XmlWorker = xmlworker;
+            this.ServerWorker = serverWorker;
         }
 
         public override void BuildPlayingFuild(Form form, int leftfirstbutton, int topfirstbutton, int widthbutton, int heightbutton,string buttonname, Color color, EventHandler functionToExec, FlatStyle flatstyle, ImageLayout layout)
@@ -176,6 +183,12 @@ namespace Krestiki_Noliki.Classes
                 }
             }
         }
+        public override void GetDataFromServer(Form form)
+        {
+                List<Statistic> stats = ServerWorker.GetData("http://localhost:17736/Home/GetData");
+                XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", stats);
+                form.Invoke((MethodInvoker)(() => ChangeDataSource(form, XmlWorker.GetData(@"..\..\Classes\Statistics\StatisticFile\pom.xml"))));
+        }
 
         #region PrivateSection
         private void Valide(Form form,int k)
@@ -192,6 +205,7 @@ namespace Krestiki_Noliki.Classes
                     temp.Won = temp.Won + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
                     ChangeDataSource(form, statistics);
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/GetData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 0 });
                     this.Start = false;
                     break;
                 case 2:
@@ -202,6 +216,7 @@ namespace Krestiki_Noliki.Classes
                     temp.Won = temp.Won + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
                     ChangeDataSource(form, statistics);
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/GetData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 1 });
                     this.Start = false;
                     break;
                 case 3:
@@ -212,11 +227,13 @@ namespace Krestiki_Noliki.Classes
                     temp.NF = temp.NF + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
                     ChangeDataSource(form, statistics);
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/GetData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 2 });
                     this.Start = false;
                     break;
                 default:
                     break;
             }
+
             
         }
 
@@ -239,16 +256,14 @@ namespace Krestiki_Noliki.Classes
             temp.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             foreach (DataGridViewColumn col in temp.Columns)
             {
-                col.Width = 206;
-                try
-                {
+                col.Width = 173;
+                try {
                     col.HeaderText = dict[col.HeaderText];
                 }
                 catch
                 {
 
                 }
-
             }
         }
         private void ChangeFigure(bool krestik, int i, int j)

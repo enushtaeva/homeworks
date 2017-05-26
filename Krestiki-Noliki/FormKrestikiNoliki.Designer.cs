@@ -36,9 +36,10 @@
             this.buttonStart = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -52,7 +53,7 @@
             "3x3",
             "4x4",
             "5x5"});
-            this.comboBox1.Location = new System.Drawing.Point(365, 829);
+            this.comboBox1.Location = new System.Drawing.Point(899, 406);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(69, 21);
             this.comboBox1.TabIndex = 21;
@@ -62,7 +63,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(81, 787);
+            this.label3.Location = new System.Drawing.Point(656, 349);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(340, 23);
             this.label3.TabIndex = 20;
@@ -72,7 +73,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(515, 696);
+            this.label1.Location = new System.Drawing.Point(641, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(192, 23);
             this.label1.TabIndex = 19;
@@ -83,7 +84,7 @@
             this.radioButtonNull.AutoSize = true;
             this.radioButtonNull.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.radioButtonNull.ForeColor = System.Drawing.Color.Red;
-            this.radioButtonNull.Location = new System.Drawing.Point(631, 762);
+            this.radioButtonNull.Location = new System.Drawing.Point(842, 137);
             this.radioButtonNull.Name = "radioButtonNull";
             this.radioButtonNull.Size = new System.Drawing.Size(43, 27);
             this.radioButtonNull.TabIndex = 18;
@@ -96,7 +97,7 @@
             this.radioButtonKrest.AutoSize = true;
             this.radioButtonKrest.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.radioButtonKrest.ForeColor = System.Drawing.Color.Red;
-            this.radioButtonKrest.Location = new System.Drawing.Point(631, 739);
+            this.radioButtonKrest.Location = new System.Drawing.Point(842, 94);
             this.radioButtonKrest.Name = "radioButtonKrest";
             this.radioButtonKrest.Size = new System.Drawing.Size(39, 27);
             this.radioButtonKrest.TabIndex = 17;
@@ -109,7 +110,7 @@
             this.buttonStart.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonStart.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonStart.ForeColor = System.Drawing.Color.Red;
-            this.buttonStart.Location = new System.Drawing.Point(260, 680);
+            this.buttonStart.Location = new System.Drawing.Point(836, 213);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(205, 86);
             this.buttonStart.TabIndex = 16;
@@ -144,31 +145,12 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Игра";
             // 
-            // tabPage2
-            // 
-            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage2.Controls.Add(this.dataGridView1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1071, 888);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Статистика";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(87, 70);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(862, 786);
-            this.dataGridView1.TabIndex = 0;
-            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.button1.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button1.ForeColor = System.Drawing.Color.Red;
-            this.button1.Location = new System.Drawing.Point(736, 739);
+            this.button1.Location = new System.Drawing.Point(782, 463);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(259, 98);
             this.button1.TabIndex = 22;
@@ -177,11 +159,45 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.button2);
+            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1071, 888);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Статистика";
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.button2.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.ForeColor = System.Drawing.Color.Red;
+            this.button2.Location = new System.Drawing.Point(622, 543);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(230, 80);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Загрузить статистику с сервера";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(149, 67);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(734, 441);
+            this.dataGridView1.TabIndex = 0;
+            // 
             // FormKrestikiNoliki
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1077, 909);
+            this.ClientSize = new System.Drawing.Size(1094, 684);
             this.Controls.Add(this.tabControl1);
             this.Name = "FormKrestikiNoliki";
             this.Text = "Крестики-нолики";
@@ -206,8 +222,9 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
