@@ -42,7 +42,6 @@
         $("#proc").text(data);
     }
     chat.client.updateStatisticTask = function (data) {
-        console.log(data);
         $("#mt tbody").find("tr:gt(0)").remove();
        var data1 = JSON.parse(data);
         for(var t=0;t<data1.length;t++){
