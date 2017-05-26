@@ -11,5 +11,6 @@ namespace Krestiki_Noliki.Classes.Server.Interfaces
     {
         void PostDataAboutFinish(string uri, ServerObject servobj);
         List<T> GetData(string uri);
+        void PostStatistic(string uri, StatisticOnTask stat);
     }
 }

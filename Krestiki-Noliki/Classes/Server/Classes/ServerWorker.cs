@@ -40,9 +40,22 @@ namespace Krestiki_Noliki.Classes.Server.Classes
                 pars.Add("Login1", servobj.Login1);
                 pars.Add("Login2", servobj.Login2);
                 pars.Add("Kod",servobj.Kod.ToString());
-                webClient.UploadValues("http://localhost:17736/Home/WriteData", pars);
+                webClient.UploadValues(uri, pars);
             }
         }
 
+        public void PostStatistic(string uri, StatisticOnTask stat)
+        {
+            using (var webClient = new WebClient())
+            {
+                var pars = new NameValueCollection();
+                pars.Add("dateofstart", stat.DateOfStart.ToString());
+                pars.Add("timetoplay", stat.TimeToPlay.ToString());
+                pars.Add("result", stat.Result.ToString());
+                pars.Add("x", stat.X.ToString());
+                pars.Add("countofstep", stat.CountOfStep.ToString());
+                webClient.UploadValues(uri, pars);
+            }
+        }
     }
 }

@@ -11,11 +11,13 @@ namespace ServerForGame.Classes
     public class StatisticsWorker:IStatisticWorker
     {
         public IJSONWorker<Statistic> JsonWorker { get; set; }
+        public IJSONWorker<StatisticOnTask> JsonWorkerTask { get; set; }
         public IHubWorker HubWorker { get; set; }
-        public StatisticsWorker(IJSONWorker<Statistic> JsonWorker,IHubWorker HubWorker)
+        public StatisticsWorker(IJSONWorker<Statistic> JsonWorker,IHubWorker HubWorker,IJSONWorker<StatisticOnTask> JsonWorkerTask)
         {
             this.JsonWorker = JsonWorker;
             this.HubWorker = HubWorker;
+            this.JsonWorkerTask = JsonWorkerTask;
         }
 
         public List<Statistic> ValidateData(string path)
@@ -56,6 +58,27 @@ namespace ServerForGame.Classes
             List<Statistic> statistics = JsonWorker.GetData(path);
             return JsonConvert.SerializeObject(statistics);
         }
+        public string PostDataTask(string path)
+        {
+            List<StatisticOnTask> statistics = JsonWorkerTask.GetData(path);
+            return JsonConvert.SerializeObject(statistics);
+        }
+        public List<StatisticOnTask> ValidateDataForTask(string path)
+        {
+            List<StatisticOnTask> statistics;
+            statistics = JsonWorkerTask.GetData(path);
+            if (statistics == null) statistics = new List<StatisticOnTask>();
+            JsonWorkerTask.WriteData(statistics, path);
+            return statistics;
+        }
+
+        public void AddDataForTask(StatisticOnTask stat,string path)
+        {
+            List<StatisticOnTask> statistics = JsonWorkerTask.GetData(path);
+            statistics.Add(stat);
+            JsonWorkerTask.WriteData(statistics, path);
+            HubWorker.BroadcastObjectTask(statistics);
+        }
 
         #region PrivateSection
         private void SetWin(ServerObject obj,List<Statistic> statistics)
@@ -75,6 +98,8 @@ namespace ServerForGame.Classes
             statistics.FirstOrDefault(a => a.Login == obj.Login1).NF++;
             statistics.FirstOrDefault(a => a.Login == obj.Login2).NF++;
         }
+
+        
         #endregion
 
     }

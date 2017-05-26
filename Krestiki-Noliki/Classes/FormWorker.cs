@@ -20,25 +20,33 @@ namespace Krestiki_Noliki.Classes
     public class FormWorker :Worker
     {
         public TabControl TabCont { get; set; }
-        public FormWorker(List<Button> buttons, bool krestik, int size, IGameWorker worker)
+        public FormWorker(List<Button> buttons, bool krestik, int size, IGameWorker worker,IXmlWorker<Statistic> xmlworker,IServerWorker<Statistic> serverWorker, IXmlWorker<StatisticOnTask> xmlworkertask, IServerWorker<StatisticOnTask> serverWorkerTask)
         {
             this.Buttons = buttons;
             this.Krestik = krestik;
             this.Size = size;
             this.GameWorker = worker;
+            this.XmlWorker = xmlworker;
+            this.ServerWorker = serverWorker;
+            this.XmlWorkerTask = xmlworkertask;
+            this.ServerWorkerTask = serverWorkerTask;
         }
 
-        public FormWorker(IGameWorker worker,IXmlWorker<Statistic> xmlworker,IServerWorker<Statistic> serverWorker)
+        public FormWorker(IGameWorker worker,IXmlWorker<Statistic> xmlworker,IServerWorker<Statistic> serverWorker, IXmlWorker<StatisticOnTask> xmlworkertask, IServerWorker<StatisticOnTask> serverWorkerTask)
         {
             this.GameWorker = worker;
             this.XmlWorker = xmlworker;
             this.ServerWorker = serverWorker;
+            this.XmlWorkerTask = xmlworkertask;
+            this.ServerWorkerTask = serverWorkerTask;
         }
 
         public override void BuildPlayingFuild(Form form, int leftfirstbutton, int topfirstbutton, int widthbutton, int heightbutton,string buttonname, Color color, EventHandler functionToExec, FlatStyle flatstyle, ImageLayout layout)
         {
-            
+            this.DateOfStart = DateTime.Now;
+            this.CountOfStep = 0;
             List<Statistic> statistics =XmlWorker.GetData(@"..\..\Classes\Statistics\StatisticFile\pom.xml");
+            List<StatisticOnTask> statisticstask = XmlWorkerTask.GetData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml");
             Button tempbutton;
             int number = 0;
 
@@ -51,7 +59,8 @@ namespace Krestiki_Noliki.Classes
                 XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
             }
              ChangeDataSource(form, statistics);
-             foreach(Control c in form.Controls)
+             ChangeDataSource2(form, statisticstask);
+            foreach (Control c in form.Controls)
              {
                    if (c is TabControl) 
                    TabCont = c as TabControl;
@@ -140,13 +149,14 @@ namespace Krestiki_Noliki.Classes
                     }
                     ChangeImage((c as Button), krestik);
                     ChangeFigure(this.Krestik, Convert.ToInt32(c.Tag.ToString()[0].ToString()) - 1, Convert.ToInt32(c.Tag.ToString()[1].ToString()) - 1);
+                    this.CountOfStep++;
                     k = this.GameWorker.ValideWinOrWon(form, this.ArrayFigures, krestik, this.Size, this.KrestikValue, this.NolikValue);
-                    Valide(form,k);
+                    Valide(form,k,krestik);
                     if (this.Start)
                     {
                          StepOfComputer(form, c.Tag.ToString(), krestik);
                          k = this.GameWorker.ValideWinOrWon(form, this.ArrayFigures, krestik, this.Size, this.KrestikValue, this.NolikValue);
-                         Valide(form,k);
+                         Valide(form,k,krestik);
                     }
                             
                   }
@@ -189,45 +199,63 @@ namespace Krestiki_Noliki.Classes
                 XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", stats);
                 form.Invoke((MethodInvoker)(() => ChangeDataSource(form, XmlWorker.GetData(@"..\..\Classes\Statistics\StatisticFile\pom.xml"))));
         }
-
+        public override void GetDataFromServerTask(Form form)
+        {
+            List<StatisticOnTask> stats = ServerWorkerTask.GetData("http://localhost:17736/Home/GetDataTask");
+            XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", stats);
+            form.Invoke((MethodInvoker)(() => ChangeDataSource2(form, XmlWorkerTask.GetData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml"))));
+        }
         #region PrivateSection
-        private void Valide(Form form,int k)
+        private void Valide(Form form,int k,bool krestik)
         {
             List<Statistic> statistics = XmlWorker.GetData(@"..\..\Classes\Statistics\StatisticFile\pom.xml");
+            List<StatisticOnTask> statisticontask = XmlWorkerTask.GetData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml");
             Statistic temp;
             switch (k)
             {
                 case 1:
+                    ServerWorker.PostStatistic("http://localhost:17736/Home/WriteDataTask", new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik?1:0, CountOfStep = this.CountOfStep, Result = 0 });
                     MessageBox.Show("Ура, победа!\nВы победили!", "Победа");
                     temp=statistics.Where(a => a.Login == "Пользователь").First();
                     temp.Win = temp.Win + 1;
                     temp = statistics.Where(a => a.Login == "Компьютер").First();
                     temp.Won = temp.Won + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
+                    statisticontask.Add(new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 0 });
+                    XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", statisticontask);
                     ChangeDataSource(form, statistics);
-                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/GetData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 0 });
+                    ChangeDataSource2(form, statisticontask);
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 0 });
                     this.Start = false;
                     break;
                 case 2:
+                    ServerWorker.PostStatistic("http://localhost:17736/Home/WriteDataTask", new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X =krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 1 });
                     MessageBox.Show("Проигрыш!\nВы проиграли!", "Проигрыш");
                     temp = statistics.Where(a => a.Login == "Компьютер").First();
                     temp.Win = temp.Win + 1;
                     temp = statistics.Where(a => a.Login == "Пользователь").First();
                     temp.Won = temp.Won + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
+                    statisticontask.Add(new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 1 });
+                    XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", statisticontask);
                     ChangeDataSource(form, statistics);
-                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/GetData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 1 });
+                    ChangeDataSource2(form, statisticontask);
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 1 });
                     this.Start = false;
                     break;
                 case 3:
+                    ServerWorker.PostStatistic("http://localhost:17736/Home/WriteDataTask", new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 2 });
                     MessageBox.Show("Ничья!", "Ничья");
                     temp = statistics.Where(a => a.Login == "Компьютер").First();
                     temp.NF = temp.NF + 1;
                     temp = statistics.Where(a => a.Login == "Пользователь").First();
                     temp.NF = temp.NF + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
+                    statisticontask.Add(new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 2 });
+                    XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", statisticontask);
                     ChangeDataSource(form, statistics);
-                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/GetData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 2 });
+                    ChangeDataSource2(form, statisticontask);
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 2 });
                     this.Start = false;
                     break;
                 default:
@@ -265,6 +293,40 @@ namespace Krestiki_Noliki.Classes
 
                 }
             }
+        }
+
+        private void ChangeDataSource2(Form form, List<StatisticOnTask> statistics)
+        {
+            DataGridView temp = new DataGridView();
+            Dictionary<string, string> dict = new Dictionary<string, string>() { { "DateOfStart", "Дата игры" }, { "TimeToPlay", "Время игры" }, { "Result", "Результат" }, { "X", "Фигура пользователя" },{ "CountOfStep", "Количество ходов пользователя" } };
+            foreach (Control c in form.Controls)
+            {
+                if (!(c is TabControl)) continue;
+                TabCont = c as TabControl;
+            }
+            foreach (Control c in TabCont.TabPages[2].Controls)
+            {
+                if (c is DataGridView)
+                    temp = c as DataGridView;
+            }
+            temp.DataSource = statistics;
+            temp.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            temp.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            foreach (DataGridViewColumn col in temp.Columns)
+            {
+                col.Width = 173;
+                try
+                {
+                    if (col.HeaderText == "TimeSinceLastEventTicks") col.Width = 0;
+                    col.HeaderText = dict[col.HeaderText];
+               
+                }
+                catch
+                {
+                  
+                }
+            }
+            
         }
         private void ChangeFigure(bool krestik, int i, int j)
         {

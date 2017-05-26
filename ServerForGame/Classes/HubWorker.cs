@@ -18,5 +18,11 @@ namespace ServerForGame.Classes
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<StatisticHub>();
             hubContext.Clients.All.updateStatistic(jsonobj);
         }
+        public void BroadcastObjectTask(object obj)
+        {
+            string jsonobj = JsonConvert.SerializeObject(obj);
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<StatisticHub>();
+            hubContext.Clients.All.updateStatisticTask(jsonobj);
+        }
     }
 }

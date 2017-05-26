@@ -138,6 +138,24 @@ namespace Krestiki_Noliki
                 Invoke((MethodInvoker)(()=> MessageBox.Show(ex.Message, "Error")));
             }
         }
-       
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Thread mythread = new Thread(GetDataTask);
+            mythread.Start();
+
+        }
+
+        private void GetDataTask()
+        {
+            try
+            {
+                worker.FormWorker.GetDataFromServerTask(this);
+            }
+            catch (Exception ex)
+            {
+                Invoke((MethodInvoker)(() => MessageBox.Show(ex.Message, "Error")));
+            }
+        }
     }
 }

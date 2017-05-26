@@ -18,7 +18,7 @@ namespace ServerForGame.Controllers
 
         public static WorkerBox workerbox { get; set; } = new WorkerBox();
         public static string AppPath { get; set; } = HostingEnvironment.ApplicationPhysicalPath + @"\StatisticFile\stats.json";
-
+        public static string TaskPath { get; set; }= HostingEnvironment.ApplicationPhysicalPath + @"\StatisticFile\statsontask.json";
         public ActionResult Index()
         {
             //Попытаться загрузить данные с файла, если он пустой, то заполнить его
@@ -36,6 +36,13 @@ namespace ServerForGame.Controllers
             workerbox.statisticWorker.SetWinOrWon(obj, AppPath);
             
         }
+        [HttpPost]
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void WriteDataTask(StatisticOnTask obj)
+        {
+            workerbox.statisticWorker.AddDataForTask(obj, TaskPath);
+
+        }
 
         [HttpPost]
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -44,6 +51,19 @@ namespace ServerForGame.Controllers
             //отправка статистики в JSON по запросу
             return workerbox.statisticWorker.PostData(AppPath);
            
+        }
+        [HttpPost]
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public string GetDataTask()
+        {
+            //отправка статистики в JSON по запросу
+            return workerbox.statisticWorker.PostDataTask(TaskPath);
+
+        }
+
+        public ActionResult StatsOnTask()
+        {
+            return View("ViewStatistic",workerbox.statisticWorker.ValidateDataForTask(TaskPath));
         }
 
        

@@ -260,6 +260,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="StatisticFile\stats.json" />
+    <Content Include="Views\Home\ViewStatistic.cshtml" />
+    <Content Include="StatisticFile\statsontask.json" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

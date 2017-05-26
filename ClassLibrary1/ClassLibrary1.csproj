@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\StatisticOnTask.cs" />
     <Compile Include="Interfaces\IJSONWorker.cs" />
     <Compile Include="Classes\JSONWorker.cs" />
     <Compile Include="Classes\ServerObject.cs" />
