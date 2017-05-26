@@ -49,7 +49,7 @@ namespace ServerForGame.Classes
             }
             JsonWorker.WriteData(statistics, path);
             statistics = JsonWorker.GetData(path);
-            HubWorker.BroadcastObject(statistics);
+            HubWorker.BroadcastObject(statistics);//Обновление статистики в браузере
         }
         public string PostData(string path)
         {

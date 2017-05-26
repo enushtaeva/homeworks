@@ -135,7 +135,7 @@ namespace Krestiki_Noliki
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error");
+                Invoke((MethodInvoker)(()=> MessageBox.Show(ex.Message, "Error")));
             }
         }
        

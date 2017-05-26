@@ -11,6 +11,7 @@ namespace ServerForGame.Classes
 {
     public class HubWorker : IHubWorker
     {
+        //Этот класс рассылает всем подключенным браузерам сообщение о том, что нужно обновить статистику
         public void BroadcastObject(object obj)
         {
             string jsonobj = JsonConvert.SerializeObject(obj);
