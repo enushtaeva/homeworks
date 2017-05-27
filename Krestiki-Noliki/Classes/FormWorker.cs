@@ -260,11 +260,17 @@ namespace Krestiki_Noliki.Classes
         }
         private void LoadStatistic(Form form,StatisticOnTask stat)
         {
-            ServerWorker.PostStatistic("http://localhost:17736/Home/WriteDataTask",stat);
-            List<StatisticOnTask> statisticontask = XmlWorkerTask.GetData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml");
-            statisticontask.Add(stat);
-            XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", statisticontask);
-            form.Invoke(new MethodInvoker(()=>ChangeDataSource2(form, statisticontask)));
+            try {
+                ServerWorker.PostStatistic("http://localhost:17736/Home/WriteDataTask", stat);
+                List<StatisticOnTask> statisticontask = XmlWorkerTask.GetData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml");
+                statisticontask.Add(stat);
+                XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", statisticontask);
+                form.Invoke(new MethodInvoker(() => ChangeDataSource2(form, statisticontask)));
+            }
+            catch (Exception ex)
+            {
+                form.Invoke((MethodInvoker)(() => MessageBox.Show(ex.Message, "Error")));
+            }
 
         }
 
