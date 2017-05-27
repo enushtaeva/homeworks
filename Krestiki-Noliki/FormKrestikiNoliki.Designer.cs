@@ -230,7 +230,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(97, 32);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(827, 472);
+            this.dataGridView2.Size = new System.Drawing.Size(873, 472);
             this.dataGridView2.TabIndex = 0;
             // 
             // FormKrestikiNoliki

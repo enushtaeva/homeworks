@@ -22,7 +22,16 @@ namespace ServerForGame.Controllers
         public ActionResult Index()
         {
             //Попытаться загрузить данные с файла, если он пустой, то заполнить его
-            return View(workerbox.statisticWorker.ValidateData(AppPath));
+            try
+            {
+                List<Statistic> st = workerbox.statisticWorker.ValidateData(AppPath);
+                return View(st);
+            }
+            catch
+            {
+                return View("Error");
+            }
+               
         }
 
         //ServerObject.Kod:
@@ -63,11 +72,17 @@ namespace ServerForGame.Controllers
 
         public ActionResult StatsOnTask()
         {
-            List<StatisticOnTask> stats = workerbox.statisticWorker.ValidateDataForTask(TaskPath);
-            if (stats != null && stats.Count() != 0)
-                ViewBag.Message = Convert.ToInt32(((float)stats.Where(a => a.Result == 0).Count()/(float)stats.Count())*100);//((stats.Where(a => a.Result == 0).Count()) / stats.Count())*100;
-            else ViewBag.Message = 0;
-            return View("ViewStatistic",stats);
+            try {
+                List<StatisticOnTask> stats = workerbox.statisticWorker.ValidateDataForTask(TaskPath);
+                if (stats != null && stats.Count() != 0)
+                    ViewBag.Message = Convert.ToInt32(((float)stats.Where(a => a.Result == 0).Count() / (float)stats.Count()) * 100);
+                else ViewBag.Message = 0;
+                return View("ViewStatistic", stats);
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
 
        

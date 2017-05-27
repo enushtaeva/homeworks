@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace ClassLibrary1
 {
     public class JSONWorker<T>:IJSONWorker<T>
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public List<T> GetData(string path)
         {
             try
@@ -28,7 +30,7 @@ namespace ClassLibrary1
             }
 
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void WriteData(List<T> objects, string path)
         {
             JsonSerializer serializer = new JsonSerializer();

@@ -14,6 +14,7 @@ using System.Net;
 using System.Collections.Specialized;
 using Krestiki_Noliki.Classes.Server.Classes;
 using Krestiki_Noliki.Classes.Server.Interfaces;
+using System.Threading;
 
 namespace Krestiki_Noliki.Classes
 {
@@ -209,52 +210,45 @@ namespace Krestiki_Noliki.Classes
         private void Valide(Form form,int k,bool krestik)
         {
             List<Statistic> statistics = XmlWorker.GetData(@"..\..\Classes\Statistics\StatisticFile\pom.xml");
-            List<StatisticOnTask> statisticontask = XmlWorkerTask.GetData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml");
             Statistic temp;
             switch (k)
             {
                 case 1:
-                    ServerWorker.PostStatistic("http://localhost:17736/Home/WriteDataTask", new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik?1:0, CountOfStep = this.CountOfStep, Result = 0 });
+                    Thread myThreadMD1 = new Thread(() => LoadStatistic(form, new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 0 }));
+                     myThreadMD1.Start();
                     MessageBox.Show("Ура, победа!\nВы победили!", "Победа");
                     temp=statistics.Where(a => a.Login == "Пользователь").First();
                     temp.Win = temp.Win + 1;
                     temp = statistics.Where(a => a.Login == "Компьютер").First();
                     temp.Won = temp.Won + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
-                    statisticontask.Add(new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 0 });
-                    XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", statisticontask);
                     ChangeDataSource(form, statistics);
-                    ChangeDataSource2(form, statisticontask);
                     ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 0 });
                     this.Start = false;
                     break;
                 case 2:
-                    ServerWorker.PostStatistic("http://localhost:17736/Home/WriteDataTask", new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X =krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 1 });
+                    Thread myThreadMD2 = new Thread(() => LoadStatistic(form, new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 1 }));
+                    myThreadMD2.Start();
                     MessageBox.Show("Проигрыш!\nВы проиграли!", "Проигрыш");
                     temp = statistics.Where(a => a.Login == "Компьютер").First();
                     temp.Win = temp.Win + 1;
                     temp = statistics.Where(a => a.Login == "Пользователь").First();
                     temp.Won = temp.Won + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
-                    statisticontask.Add(new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 1 });
-                    XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", statisticontask);
                     ChangeDataSource(form, statistics);
-                    ChangeDataSource2(form, statisticontask);
                     ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 1 });
                     this.Start = false;
                     break;
                 case 3:
-                    ServerWorker.PostStatistic("http://localhost:17736/Home/WriteDataTask", new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 2 });
+                    Thread myThreadMD3 = new Thread(() => LoadStatistic(form, new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 2 }));
+                    myThreadMD3.Start();
                     MessageBox.Show("Ничья!", "Ничья");
                     temp = statistics.Where(a => a.Login == "Компьютер").First();
                     temp.NF = temp.NF + 1;
                     temp = statistics.Where(a => a.Login == "Пользователь").First();
                     temp.NF = temp.NF + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
-                    statisticontask.Add(new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 2 });
-                    XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", statisticontask);
                     ChangeDataSource(form, statistics);
-                    ChangeDataSource2(form, statisticontask);
                     ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 2 });
                     this.Start = false;
                     break;
@@ -263,6 +257,15 @@ namespace Krestiki_Noliki.Classes
             }
 
             
+        }
+        private void LoadStatistic(Form form,StatisticOnTask stat)
+        {
+            ServerWorker.PostStatistic("http://localhost:17736/Home/WriteDataTask",stat);
+            List<StatisticOnTask> statisticontask = XmlWorkerTask.GetData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml");
+            statisticontask.Add(stat);
+            XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", statisticontask);
+            form.Invoke(new MethodInvoker(()=>ChangeDataSource2(form, statisticontask)));
+
         }
 
         private void ChangeDataSource(Form form, List<Statistic> statistics)
@@ -309,23 +312,32 @@ namespace Krestiki_Noliki.Classes
                 if (c is DataGridView)
                     temp = c as DataGridView;
             }
-            temp.DataSource = statistics;
             temp.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             temp.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            foreach (DataGridViewColumn col in temp.Columns)
+            temp.Columns.Clear();
+            temp.Rows.Clear();
+            temp.AllowUserToAddRows = false;
+            temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText="Дата игры",Width=168});
+            temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Время игры", Width = 168 });
+            temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Результат", Width = 168 });
+            temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Фигура пользователя", Width = 168 });
+            temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Количество ходов пользователя", Width = 168 });
+            foreach (StatisticOnTask st in statistics)
             {
-                col.Width = 173;
-                try
-                {
-                    if (col.HeaderText == "TimeSinceLastEventTicks") col.Width = 0;
-                    col.HeaderText = dict[col.HeaderText];
-               
-                }
-                catch
-                {
-                  
-                }
+                DataGridViewRow c = new DataGridViewRow();
+                c.Cells.Add(new DataGridViewTextBoxCell());
+                c.Cells[0].Value = st.DateOfStart.ToString("d");
+                c.Cells.Add(new DataGridViewTextBoxCell());
+                c.Cells[1].Value = string.Format("{0:hh\\:mm\\:ss}", st.TimeToPlay);
+                c.Cells.Add(new DataGridViewTextBoxCell());
+                c.Cells[2].Value = ((st.Result == 0) ? "WinOfUser" : (st.Result == 1) ? "WinOfComputer" : "Draw");
+                c.Cells.Add(new DataGridViewTextBoxCell());
+                c.Cells[3].Value = ((st.X == 1) ? "X" : "O");
+                c.Cells.Add(new DataGridViewTextBoxCell());
+                c.Cells[4].Value = st.CountOfStep;
+                temp.Rows.Add(c);
             }
+            
             
         }
         private void ChangeFigure(bool krestik, int i, int j)

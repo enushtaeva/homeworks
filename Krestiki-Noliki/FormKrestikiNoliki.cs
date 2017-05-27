@@ -25,9 +25,7 @@ namespace Krestiki_Noliki
     public partial class FormKrestikiNoliki : Form
     {
         public WorkerBox worker { get; private set; } = new WorkerBox();
-        //DataGridView со статистикой по заданию:
-        //Результат: 0-победа пользователя, 1-победа компьютера, 2-ничья
-        //Фигура пользователя: 1-крестик, 0-нолик
+        //Время игры в статистике по заданию - это длительность игры (бенчмарк)
         public FormKrestikiNoliki()
         {
             InitializeComponent();

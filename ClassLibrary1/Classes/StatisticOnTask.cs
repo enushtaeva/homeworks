@@ -26,7 +26,7 @@ namespace ClassLibrary1
         public int CountOfStep { get; set; }
         [XmlIgnore]
         [JsonProperty("timetoplay")]
-        public TimeSpan TimeToPlay
+        public TimeSpan TimeToPlay//- это длительность игры
         {
             get { return m_TimeSinceLastEvent; }
             set { m_TimeSinceLastEvent = value; }
