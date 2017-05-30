@@ -22,7 +22,6 @@ namespace ServerForGame.Classes
                 using (SqlConnection cn = new SqlConnection())
                 {
                     cn.ConnectionString = @"Data Source=(LocalDb)\" + NameOfServer + @";AttachDbFilename=|DataDirectory|\DBStatistics.mdf;Initial Catalog=DBStatistics;Integrated Security=True";
-                    cn.Open();
                     using (StatisticsContext db = new StatisticsContext(cn))
                     {
                         db.Statistics.Add(statistic);
@@ -44,7 +43,6 @@ namespace ServerForGame.Classes
             using (SqlConnection cn = new SqlConnection())
             {
                 cn.ConnectionString = @"Data Source=(LocalDb)\" + NameOfServer + @";AttachDbFilename=|DataDirectory|\DBStatistics.mdf;Initial Catalog=DBStatistics;Integrated Security=True";
-                cn.Open();
                 using (StatisticsContext db = new StatisticsContext(cn))
             {
                  result = db.Statistics.ToList();

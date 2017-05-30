@@ -44,9 +44,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClassLibrary1">
-      <HintPath>..\ClassLibrary1\bin\Release\ClassLibrary1.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.0.1011, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -223,8 +220,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DBStatistics.mdf" />
-    <Content Include="App_Data\DBStatistics_log.ldf" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -268,7 +263,9 @@
     <Content Include="StatisticFile\stats.json" />
     <Content Include="Views\Home\ViewStatistic.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -277,6 +274,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj">
+      <Project>{e6974090-579e-4c59-af3e-bad2c5b9badd}</Project>
+      <Name>ClassLibrary1</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Krestiki-Noliki\Krestiki-Noliki.csproj">
       <Project>{a2c296f1-9a18-471b-b3c5-e0d9190e17e1}</Project>
       <Name>Krestiki-Noliki</Name>

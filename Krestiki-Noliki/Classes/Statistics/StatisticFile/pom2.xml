@@ -168,4 +168,25 @@
     <cuntofstep>4</cuntofstep>
     <timetoplay>26331506</timetoplay>
   </statistic>
+  <statistic>
+    <datefstart>2017-05-30T14:26:49.5331084+03:00</datefstart>
+    <result>1</result>
+    <figure>0</figure>
+    <cuntofstep>3</cuntofstep>
+    <timetoplay>18631065</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-30T14:26:54.5843973+03:00</datefstart>
+    <result>1</result>
+    <figure>0</figure>
+    <cuntofstep>2</cuntofstep>
+    <timetoplay>12030688</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-05-30T14:26:57.341555+03:00</datefstart>
+    <result>2</result>
+    <figure>0</figure>
+    <cuntofstep>4</cuntofstep>
+    <timetoplay>28461628</timetoplay>
+  </statistic>
 </ArrayOfStatistic>

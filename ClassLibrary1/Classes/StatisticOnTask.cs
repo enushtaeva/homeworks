@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-
+using System.ComponentModel.DataAnnotations;
 namespace ClassLibrary1
 {
     [XmlType("statistic")]
@@ -13,6 +13,7 @@ namespace ClassLibrary1
     {
         private TimeSpan m_TimeSinceLastEvent;
         [XmlIgnore]
+        [Key]
         public int Id { get; set; }
         [XmlElement("datefstart")]
         public DateTime DateOfStart { get; set; }
