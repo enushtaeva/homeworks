@@ -84,12 +84,17 @@ namespace ServerForGame.Controllers
         [NoCache]
         public ActionResult StatsOnTask()
         {
+            try {
                 List<StatisticOnTask> stats = workerbox.statisticWorker.ValidateDataForTask();
-
                 if (stats != null && stats.Count() != 0)
                     ViewBag.Message = Convert.ToInt32(((float)stats.Where(a => a.Result == 0).Count() / (float)stats.Count()) * 100);
                 else ViewBag.Message = 0;
                 return View("ViewStatistic", stats);
+            }
+            catch
+            {
+                return View("Error");
+            }
 
         }
 
