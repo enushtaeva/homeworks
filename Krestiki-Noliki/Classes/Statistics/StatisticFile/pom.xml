@@ -2,14 +2,14 @@
 <ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <user>
     <login>Пользователь</login>
-    <win>0</win>
-    <won>3</won>
-    <nf>9</nf>
+    <win>2</win>
+    <won>11</won>
+    <nf>14</nf>
   </user>
   <user>
     <login>Компьютер</login>
-    <win>3</win>
-    <won>0</won>
-    <nf>9</nf>
+    <win>11</win>
+    <won>2</won>
+    <nf>14</nf>
   </user>
 </ArrayOfUser>

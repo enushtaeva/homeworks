@@ -12,20 +12,17 @@ namespace ClassLibrary1
     public  class StatisticOnTask
     {
         private TimeSpan m_TimeSinceLastEvent;
-        [JsonProperty("dateofstart")]
+        [XmlIgnore]
+        public int Id { get; set; }
         [XmlElement("datefstart")]
         public DateTime DateOfStart { get; set; }
-        [JsonProperty("result")]
         [XmlElement("result")]
         public int Result { get; set; }
-        [JsonProperty("figure")]
         [XmlElement("figure")]
         public int X { get; set; }
-        [JsonProperty("countofstep")]
         [XmlElement("cuntofstep")]
         public int CountOfStep { get; set; }
         [XmlIgnore]
-        [JsonProperty("timetoplay")]
         public TimeSpan TimeToPlay//- это длительность игры
         {
             get { return m_TimeSinceLastEvent; }

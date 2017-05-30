@@ -11,13 +11,13 @@ namespace ServerForGame.Classes
     public class StatisticsWorker:IStatisticWorker
     {
         public IJSONWorker<Statistic> JsonWorker { get; set; }
-        public IJSONWorker<StatisticOnTask> JsonWorkerTask { get; set; }
+        public IDBRepository RepositoryDB { get; set; }
         public IHubWorker HubWorker { get; set; }
-        public StatisticsWorker(IJSONWorker<Statistic> JsonWorker,IHubWorker HubWorker,IJSONWorker<StatisticOnTask> JsonWorkerTask)
+        public StatisticsWorker(IJSONWorker<Statistic> JsonWorker,IHubWorker HubWorker,IDBRepository repository)
         {
             this.JsonWorker = JsonWorker;
             this.HubWorker = HubWorker;
-            this.JsonWorkerTask = JsonWorkerTask;
+            this.RepositoryDB = repository;
         }
 
         public List<Statistic> ValidateData(string path)
@@ -58,27 +58,41 @@ namespace ServerForGame.Classes
             List<Statistic> statistics = JsonWorker.GetData(path);
             return JsonConvert.SerializeObject(statistics);
         }
-        public string PostDataTask(string path)
+
+        public string PostDataTask()
         {
-            List<StatisticOnTask> statistics = JsonWorkerTask.GetData(path);
-            return JsonConvert.SerializeObject(statistics);
+            try {
+                List<StatisticOnTask> statistics;
+                statistics = RepositoryDB.GetAll();
+                return JsonConvert.SerializeObject(statistics);
+            }
+            catch
+            {
+                return JsonConvert.SerializeObject(new List<StatisticOnTask>());
+            }
         }
-        public List<StatisticOnTask> ValidateDataForTask(string path)
+
+        public List<StatisticOnTask> ValidateDataForTask()
         {
             List<StatisticOnTask> statistics;
-            statistics = JsonWorkerTask.GetData(path);
-            if (statistics == null) statistics = new List<StatisticOnTask>();
-            JsonWorkerTask.WriteData(statistics, path);
+            statistics = RepositoryDB.GetAll();
             return statistics;
         }
 
-        public void AddDataForTask(StatisticOnTask stat,string path)
+        public void AddDataForTask(StatisticOnTask stat)
         {
-            List<StatisticOnTask> statistics = JsonWorkerTask.GetData(path);
-            statistics.Add(stat);
-            JsonWorkerTask.WriteData(statistics, path);
-            int pr=Convert.ToInt32(((float)statistics.Where(a => a.Result == 0).Count() / (float)statistics.Count()) * 100);
-            HubWorker.BroadcastObjectTask(statistics,pr);
+            try {
+                RepositoryDB.AddStatistic(stat);
+                List<StatisticOnTask> statistics = RepositoryDB.GetAll();
+                int pr = 0;
+                if (Convert.ToInt32(((float)statistics.Count())) != 0)
+                    pr = Convert.ToInt32(((float)statistics.Where(a => a.Result == 0).Count() / (float)statistics.Count()) * 100);
+                HubWorker.BroadcastObjectTask(statistics, pr);
+            }
+            catch
+            {
+
+            }
         }
 
         #region PrivateSection

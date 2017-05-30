@@ -5,7 +5,7 @@
 }
 <br />
 <br />
-<h1 class="starter-template" style="text-align:center">Статистика из файла JSON</h1>
+<h1 class="starter-template" style="text-align:center">Статистика из базы данных</h1>
 <br />
 <br />
 <table class="table" id="mt">
@@ -30,6 +30,7 @@
 <br />
 <p style="margin-left:200px">Процент выигрышей пользователя:</p>
 <p style="display:block; margin-left:400px; font-size:24px;color:#0094ff;margin-bottom:50px;" id="proc">@ViewBag.Message</p>
+<p  style="margin-left:200px">@ViewBag.ErrorText</p>
 @section scripts {
 
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
@@ -47,32 +48,32 @@
         for(var t=0;t<data1.length;t++){
             var tr = document.createElement("tr");
             var td = document.createElement("td");
-            td.innerHTML = new Date(data1[t].dateofstart).toLocaleDateString();
+            td.innerHTML = new Date(data1[t].DateOfStart).toLocaleDateString();
             tr.appendChild(td);
             td = document.createElement("td");
-            var diff = String(data1[t].timetoplay);
+            var diff = String(data1[t].TimeToPlay);
             diff=diff.substring(0,8);
             td.innerHTML = diff;
             tr.appendChild(td);
             td = document.createElement("td");
-            if (data1[t].result == 0) {
+            if (data1[t].Result == 0) {
                 td.innerHTML = "WinOfUser";
             }
             else
-                if (data1[t].result == 1) {
+                if (data1[t].Result == 1) {
                     td.innerHTML = "WinOfComputer";
                 } 
                 else td.innerHTML = "Draw";
 
             tr.appendChild(td);
             td = document.createElement("td");
-            if (data1[t].figure==1)
+            if (data1[t].X==1)
                 td.innerHTML = "X";
             else
                     td.innerHTML = "O";
             tr.appendChild(td);
             td = document.createElement("td");
-            td.innerHTML = data1[t].countofstep;
+            td.innerHTML = data1[t].CountOfStep;
             tr.appendChild(td);
             $("#mt tbody").append(tr);
         }

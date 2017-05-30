@@ -35,3 +35,10 @@ table th{
      color:#000000;
      text-align:center;
 }
+.mybt{
+    background: #0033cc;
+    color: #ffffff;
+}
+.mybt:hover{
+    color:#ff0000;
+}

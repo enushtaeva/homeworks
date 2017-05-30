@@ -2,6 +2,7 @@
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 using ServerForGame.Classes;
+using ServerForGame.Context;
 using ServerForGame.Hubs;
 using System;
 using System.Collections.Generic;
@@ -16,21 +17,23 @@ namespace ServerForGame.Controllers
     public class HomeController : Controller
     {
 
-        public static WorkerBox workerbox { get; set; } = new WorkerBox();
+        public static WorkerBox workerbox { get; set; } = new WorkerBox("");
         public static string AppPath { get; set; } = HostingEnvironment.ApplicationPhysicalPath + @"\StatisticFile\stats.json";
-        public static string TaskPath { get; set; }= HostingEnvironment.ApplicationPhysicalPath + @"\StatisticFile\statsontask.json";
+        [NoCache]
         public ActionResult Index()
         {
             //Попытаться загрузить данные с файла, если он пустой, то заполнить его
             try
-            {
-                List<Statistic> st = workerbox.statisticWorker.ValidateData(AppPath);
-                return View(st);
-            }
-            catch
-            {
-                return View("Error");
-            }
+             {
+                if (Request.Cookies["servername"] != null)
+                    workerbox.NameOfServer = Request.Cookies["servername"].Value;
+                 List<Statistic> st = workerbox.statisticWorker.ValidateData(AppPath);
+                 return View(st);
+             }
+             catch
+             {
+                 return View("Error");
+             }
                
         }
 
@@ -49,7 +52,7 @@ namespace ServerForGame.Controllers
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void WriteDataTask(StatisticOnTask obj)
         {
-            workerbox.statisticWorker.AddDataForTask(obj, TaskPath);
+            workerbox.statisticWorker.AddDataForTask(obj);
 
         }
 
@@ -66,14 +69,24 @@ namespace ServerForGame.Controllers
         public string GetDataTask()
         {
             //отправка статистики в JSON по запросу
-            return workerbox.statisticWorker.PostDataTask(TaskPath);
+            return workerbox.statisticWorker.PostDataTask();
 
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public int SetNameOfServer(string nameofserver)
+        {
+            workerbox.NameOfServer = nameofserver;
+            return 0;
+        }
+
+        [NoCache]
         public ActionResult StatsOnTask()
         {
             try {
-                List<StatisticOnTask> stats = workerbox.statisticWorker.ValidateDataForTask(TaskPath);
+                List<StatisticOnTask> stats = workerbox.statisticWorker.ValidateDataForTask();
+
                 if (stats != null && stats.Count() != 0)
                     ViewBag.Message = Convert.ToInt32(((float)stats.Where(a => a.Result == 0).Count() / (float)stats.Count()) * 100);
                 else ViewBag.Message = 0;

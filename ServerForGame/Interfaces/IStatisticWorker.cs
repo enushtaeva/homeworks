@@ -10,10 +10,10 @@ namespace ServerForGame.Interfaces
     public interface IStatisticWorker
     {
         List<Statistic> ValidateData(string path);
-        List<StatisticOnTask> ValidateDataForTask(string path);
-        void AddDataForTask(StatisticOnTask stat, string path);
+        List<StatisticOnTask> ValidateDataForTask();
+        void AddDataForTask(StatisticOnTask stat);
         void SetWinOrWon(ServerObject servObj, string path);
         string PostData(string path);
-        string PostDataTask(string path);
+        string PostDataTask();
     }
 }
