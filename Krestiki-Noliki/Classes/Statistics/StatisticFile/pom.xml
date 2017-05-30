@@ -4,12 +4,12 @@
     <login>Пользователь</login>
     <win>0</win>
     <won>3</won>
-    <nf>9</nf>
+    <nf>10</nf>
   </user>
   <user>
     <login>Компьютер</login>
     <win>3</win>
     <won>0</won>
-    <nf>9</nf>
+    <nf>10</nf>
   </user>
 </ArrayOfUser>

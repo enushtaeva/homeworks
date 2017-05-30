@@ -84,4 +84,11 @@
     <cuntofstep>4</cuntofstep>
     <timetoplay>28621637</timetoplay>
   </statistic>
+  <statistic>
+    <datefstart>2017-05-30T19:57:40.5284779+03:00</datefstart>
+    <result>2</result>
+    <figure>0</figure>
+    <cuntofstep>4</cuntofstep>
+    <timetoplay>22211270</timetoplay>
+  </statistic>
 </ArrayOfStatistic>
