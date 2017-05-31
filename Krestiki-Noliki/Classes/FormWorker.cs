@@ -304,7 +304,7 @@ namespace Krestiki_Noliki.Classes
             }
         }
 
-        private void ChangeDataSource2(Form form, List<StatisticOnTask> statistics)
+        public void ChangeDataSource2(Form form, List<StatisticOnTask> statistics)
         {
             DataGridView temp = new DataGridView();
             Dictionary<string, string> dict = new Dictionary<string, string>() { { "DateOfStart", "Дата игры" }, { "TimeToPlay", "Длительность игры" }, { "Result", "Результат" }, { "X", "Фигура пользователя" },{ "CountOfStep", "Количество ходов пользователя" } };

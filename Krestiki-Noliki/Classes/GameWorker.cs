@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Krestiki_Noliki.Classes
 {
-    class GameWorker :  IGameWorker
+    public class GameWorker :  IGameWorker
     {
         public TabControl TabCont { get; set; }
         public int ValideWinOrWon(Form form,int[][] arrfigures,bool krestik, int size,int krestikvalue,int nolikvalue)
