@@ -48,6 +48,8 @@ namespace ServerForGame.Classes
                 case 2:
                     SetDraw(servObj, statistics);
                     break;
+                default:
+                    break;
             }
             JsonWorker.WriteData(statistics, path);
             statistics = JsonWorker.GetData(path);
