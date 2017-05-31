@@ -307,7 +307,7 @@ namespace Krestiki_Noliki.Classes
         private void ChangeDataSource2(Form form, List<StatisticOnTask> statistics)
         {
             DataGridView temp = new DataGridView();
-            Dictionary<string, string> dict = new Dictionary<string, string>() { { "DateOfStart", "Дата игры" }, { "TimeToPlay", "Время игры" }, { "Result", "Результат" }, { "X", "Фигура пользователя" },{ "CountOfStep", "Количество ходов пользователя" } };
+            Dictionary<string, string> dict = new Dictionary<string, string>() { { "DateOfStart", "Дата игры" }, { "TimeToPlay", "Длительность игры" }, { "Result", "Результат" }, { "X", "Фигура пользователя" },{ "CountOfStep", "Количество ходов пользователя" } };
             foreach (Control c in form.Controls)
             {
                 if (!(c is TabControl)) continue;
