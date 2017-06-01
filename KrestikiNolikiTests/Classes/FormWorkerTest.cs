@@ -100,7 +100,7 @@ namespace KrestikiNolikiTests.Classes
             FormKrestikiNoliki form = new FormKrestikiNoliki();//форма, на которой будет строиться игровое поле
             int[][] position = new int[][] { new int[] { 0, 0, 0 }, new int[] { 0, 0, 0 }, new int[] { 0, 0, 0 } };//массив, описывающий положение фигур на поле 5-крестик 7 - нолик 0-пустая клетка
             IGameWorker gameworker =
-                Mock.Of<IGameWorker>(d => d.StepOfComputer(It.IsAny<Form>(), It.IsAny<string>(), It.IsAny<int[][]>(), It.IsAny<bool>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()) == "11");//создаем заглушку, которая
+                new GameWorkerStub();//создаем заглушку, которая
             //будет играть роль интерфейса с логикой игры, и в функции StepOfComputer пусть будет возвращаться 11 - это тег кнопки, у которой надо сменить background
             BuildPlayingFuildTest(form, 10, 10, 200, 200, "gameButton", Color.Red, null, FlatStyle.Popup, ImageLayout.Zoom);//Строим игровое поле на тестовой форме
             TabControl TabCont = new TabControl();//TabControl на форме
@@ -110,13 +110,13 @@ namespace KrestikiNolikiTests.Classes
             //Act
             worker.StepOfComputer(form, "", true);//вызывается метод StepOfComputer из интерфейса логики, роль которого играет заглушка и его результат отображается на форме
 
+            //Assert
             foreach (Control c in form.Controls)
             {
                 if (!(c is TabControl)) continue;//находим на форме TabControl
                 TabCont = c as TabControl;
                 break;
             }
-            //Assert
             foreach (Control c in TabCont.TabPages[0].Controls)//Находим кнопку в TabControl
             {
                 if (!(c is Button)) continue;
