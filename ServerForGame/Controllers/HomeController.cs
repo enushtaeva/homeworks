@@ -50,9 +50,9 @@ namespace ServerForGame.Controllers
         }
         [HttpPost]
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void WriteDataTask(StatisticOnTask obj)
+        public int WriteDataTask(StatisticOnTask obj)
         {
-            workerbox.statisticWorker.AddDataForTask(obj);
+            return workerbox.statisticWorker.AddDataForTask(obj);
 
         }
 

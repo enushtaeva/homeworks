@@ -11,7 +11,7 @@ namespace ServerForGame.Interfaces
     {
         List<Statistic> ValidateData(string path);
         List<StatisticOnTask> ValidateDataForTask();
-        void AddDataForTask(StatisticOnTask stat);
+        int AddDataForTask(StatisticOnTask stat);
         void SetWinOrWon(ServerObject servObj, string path);
         string PostData(string path);
         string PostDataTask();

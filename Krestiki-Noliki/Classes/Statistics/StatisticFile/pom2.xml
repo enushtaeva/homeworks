@@ -8,17 +8,38 @@
     <timetoplay>20201155</timetoplay>
   </statistic>
   <statistic>
-    <datefstart>2017-05-30T20:05:45.5302184+03:00</datefstart>
+    <datefstart>2017-05-30T20:05:45</datefstart>
     <result>1</result>
     <figure>0</figure>
     <cuntofstep>3</cuntofstep>
     <timetoplay>22501287</timetoplay>
   </statistic>
   <statistic>
-    <datefstart>2017-05-30T20:05:54.1687125+03:00</datefstart>
+    <datefstart>2017-05-30T20:05:54</datefstart>
     <result>2</result>
     <figure>1</figure>
     <cuntofstep>5</cuntofstep>
     <timetoplay>39492259</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-06-02T21:11:01</datefstart>
+    <result>1</result>
+    <figure>0</figure>
+    <cuntofstep>3</cuntofstep>
+    <timetoplay>16790961</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-06-02T21:11:37.7636066+03:00</datefstart>
+    <result>2</result>
+    <figure>1</figure>
+    <cuntofstep>11</cuntofstep>
+    <timetoplay>93105326</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-06-02T21:11:57.3247255+03:00</datefstart>
+    <result>2</result>
+    <figure>1</figure>
+    <cuntofstep>10</cuntofstep>
+    <timetoplay>80584609</timetoplay>
   </statistic>
 </ArrayOfStatistic>

@@ -68,7 +68,7 @@ namespace ServerForGame.Classes
             }
             catch
             {
-                return JsonConvert.SerializeObject(new List<StatisticOnTask>());
+                return "";
             }
         }
 
@@ -79,7 +79,7 @@ namespace ServerForGame.Classes
             return statistics;
         }
 
-        public void AddDataForTask(StatisticOnTask stat)
+        public int AddDataForTask(StatisticOnTask stat)
         {
             try {
                 RepositoryDB.AddStatistic(stat);
@@ -88,10 +88,11 @@ namespace ServerForGame.Classes
                 if (Convert.ToInt32(((float)statistics.Count())) != 0)
                     pr = Convert.ToInt32(((float)statistics.Where(a => a.Result == 0).Count() / (float)statistics.Count()) * 100);
                 HubWorker.BroadcastObjectTask(statistics, pr);
+                return 0;
             }
             catch
             {
-
+                return 1;
             }
         }
 

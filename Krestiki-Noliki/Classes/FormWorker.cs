@@ -196,15 +196,41 @@ namespace Krestiki_Noliki.Classes
         }
         public override void GetDataFromServer(Form form)
         {
+            try {
                 List<Statistic> stats = ServerWorker.GetData("http://localhost:17736/Home/GetData");
                 XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", stats);
                 form.Invoke((MethodInvoker)(() => ChangeDataSource(form, XmlWorker.GetData(@"..\..\Classes\Statistics\StatisticFile\pom.xml"))));
+            }
+            catch(Exception ex)
+            {
+                try
+                {
+                    form.Invoke((MethodInvoker)(() => MessageBox.Show(ex.Message, "Error")));
+                }
+                catch
+                {
+
+                }
+            }
         }
         public override void GetDataFromServerTask(Form form)
         {
+            try { 
             List<StatisticOnTask> stats = ServerWorkerTask.GetData("http://localhost:17736/Home/GetDataTask");
             XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", stats);
             form.Invoke((MethodInvoker)(() => ChangeDataSource2(form, XmlWorkerTask.GetData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml"))));
+             }
+              catch(Exception ex)
+            {
+                try
+                {
+                    form.Invoke((MethodInvoker)(() => MessageBox.Show(ex.Message, "Error")));
+                }
+                catch
+                {
+
+                }
+            }
         }
         #region PrivateSection
         private void Valide(Form form,int k,bool krestik)
@@ -269,8 +295,15 @@ namespace Krestiki_Noliki.Classes
             }
             catch (Exception ex)
             {
-                form.Invoke((MethodInvoker)(() => MessageBox.Show(ex.Message, "Error")));
+                try {
+                    form.Invoke((MethodInvoker)(() => MessageBox.Show(ex.Message, "Error")));
+                }
+                catch
+                {
+
+                }
             }
+           
 
         }
 
