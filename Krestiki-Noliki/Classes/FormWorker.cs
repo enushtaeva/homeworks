@@ -249,8 +249,8 @@ namespace Krestiki_Noliki.Classes
                     temp.Won = temp.Won + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
                     ChangeDataSource(form, statistics);
-                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 0 });
                     this.Start = false;
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 0 });
                     break;
                 case 2:
                     Thread myThreadMD2 = new Thread(() => LoadStatistic(form, new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 1 }));
@@ -262,8 +262,8 @@ namespace Krestiki_Noliki.Classes
                     temp.Won = temp.Won + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
                     ChangeDataSource(form, statistics);
-                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 1 });
                     this.Start = false;
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 1 });
                     break;
                 case 3:
                     Thread myThreadMD3 = new Thread(() => LoadStatistic(form, new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 2 }));
@@ -275,8 +275,8 @@ namespace Krestiki_Noliki.Classes
                     temp.NF = temp.NF + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
                     ChangeDataSource(form, statistics);
-                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 2 });
                     this.Start = false;
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 2 });
                     break;
                 default:
                     break;

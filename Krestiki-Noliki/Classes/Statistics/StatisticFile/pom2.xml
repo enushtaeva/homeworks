@@ -29,17 +29,24 @@
     <timetoplay>16790961</timetoplay>
   </statistic>
   <statistic>
-    <datefstart>2017-06-02T21:11:37.7636066+03:00</datefstart>
+    <datefstart>2017-06-02T21:11:37</datefstart>
     <result>2</result>
     <figure>1</figure>
     <cuntofstep>11</cuntofstep>
     <timetoplay>93105326</timetoplay>
   </statistic>
   <statistic>
-    <datefstart>2017-06-02T21:11:57.3247255+03:00</datefstart>
+    <datefstart>2017-06-02T21:11:57</datefstart>
     <result>2</result>
     <figure>1</figure>
     <cuntofstep>10</cuntofstep>
     <timetoplay>80584609</timetoplay>
+  </statistic>
+  <statistic>
+    <datefstart>2017-06-02T21:24:22</datefstart>
+    <result>1</result>
+    <figure>0</figure>
+    <cuntofstep>3</cuntofstep>
+    <timetoplay>21401224</timetoplay>
   </statistic>
 </ArrayOfStatistic>

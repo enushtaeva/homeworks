@@ -3,12 +3,12 @@
   <user>
     <login>Пользователь</login>
     <win>2</win>
-    <won>17</won>
+    <won>19</won>
     <nf>20</nf>
   </user>
   <user>
     <login>Компьютер</login>
-    <win>17</win>
+    <win>19</win>
     <won>2</won>
     <nf>20</nf>
   </user>
