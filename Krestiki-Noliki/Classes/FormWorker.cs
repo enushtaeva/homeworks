@@ -196,18 +196,47 @@ namespace Krestiki_Noliki.Classes
         }
         public override void GetDataFromServer(Form form)
         {
+            try
+            {
                 List<Statistic> stats = ServerWorker.GetData("http://localhost:17736/Home/GetData");
                 XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", stats);
                 form.Invoke((MethodInvoker)(() => ChangeDataSource(form, XmlWorker.GetData(@"..\..\Classes\Statistics\StatisticFile\pom.xml"))));
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    form.Invoke((MethodInvoker)(() => MessageBox.Show(ex.Message, "Error")));
+                }
+                catch
+                {
+
+                }
+            }
         }
         public override void GetDataFromServerTask(Form form)
         {
-            List<StatisticOnTask> stats = ServerWorkerTask.GetData("http://localhost:17736/Home/GetDataTask");
-            XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", stats);
-            form.Invoke((MethodInvoker)(() => ChangeDataSource2(form, XmlWorkerTask.GetData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml"))));
+            try
+            {
+                List<StatisticOnTask> stats = ServerWorkerTask.GetData("http://localhost:17736/Home/GetDataTask");
+                XmlWorkerTask.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml", stats);
+                form.Invoke((MethodInvoker)(() => ChangeDataSource2(form, XmlWorkerTask.GetData(@"..\..\Classes\Statistics\StatisticFile\pom2.xml"))));
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    form.Invoke((MethodInvoker)(() => MessageBox.Show(ex.Message, "Error")));
+                }
+                catch
+                {
+
+                }
+            }
         }
+
         #region PrivateSection
-        private void Valide(Form form,int k,bool krestik)
+        private void Valide(Form form, int k, bool krestik)
         {
             List<Statistic> statistics = XmlWorker.GetData(@"..\..\Classes\Statistics\StatisticFile\pom.xml");
             Statistic temp;
@@ -215,16 +244,16 @@ namespace Krestiki_Noliki.Classes
             {
                 case 1:
                     Thread myThreadMD1 = new Thread(() => LoadStatistic(form, new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 0 }));
-                     myThreadMD1.Start();
+                    myThreadMD1.Start();
                     MessageBox.Show("Ура, победа!\nВы победили!", "Победа");
-                    temp=statistics.Where(a => a.Login == "Пользователь").First();
+                    temp = statistics.Where(a => a.Login == "Пользователь").First();
                     temp.Win = temp.Win + 1;
                     temp = statistics.Where(a => a.Login == "Компьютер").First();
                     temp.Won = temp.Won + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
                     ChangeDataSource(form, statistics);
-                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 0 });
                     this.Start = false;
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 0 });
                     break;
                 case 2:
                     Thread myThreadMD2 = new Thread(() => LoadStatistic(form, new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 1 }));
@@ -236,8 +265,8 @@ namespace Krestiki_Noliki.Classes
                     temp.Won = temp.Won + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
                     ChangeDataSource(form, statistics);
-                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 1 });
                     this.Start = false;
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 1 });
                     break;
                 case 3:
                     Thread myThreadMD3 = new Thread(() => LoadStatistic(form, new StatisticOnTask() { DateOfStart = this.DateOfStart, TimeToPlay = DateTime.Now - this.DateOfStart, X = krestik ? 1 : 0, CountOfStep = this.CountOfStep, Result = 2 }));
@@ -249,14 +278,14 @@ namespace Krestiki_Noliki.Classes
                     temp.NF = temp.NF + 1;
                     XmlWorker.WriteData(@"..\..\Classes\Statistics\StatisticFile\pom.xml", statistics);
                     ChangeDataSource(form, statistics);
-                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 2 });
                     this.Start = false;
+                    ServerWorker.PostDataAboutFinish("http://localhost:17736/Home/WriteData", new ServerObject() { Login1 = "Пользователь", Login2 = "Компьютер", Kod = 2 });
                     break;
                 default:
                     break;
-            }
 
-            
+
+            }
         }
         private void LoadStatistic(Form form,StatisticOnTask stat)
         {
@@ -269,80 +298,91 @@ namespace Krestiki_Noliki.Classes
             }
             catch (Exception ex)
             {
-                form.Invoke((MethodInvoker)(() => MessageBox.Show(ex.Message, "Error")));
-            }
-
-        }
-
-        private void ChangeDataSource(Form form, List<Statistic> statistics)
-        {
-            DataGridView temp = new DataGridView();
-            Dictionary<string, string> dict = new Dictionary<string, string>() { { "Login", "Логин" }, { "Win", "Победы" }, { "Won", "Поражения" }, { "NF", "Ничьи" } };
-            foreach (Control c in form.Controls)
-            {
-                if (!(c is TabControl)) continue;
-                TabCont = c as TabControl;
-            }
-            foreach (Control c in TabCont.TabPages[1].Controls)
-            {
-                if (c is DataGridView)
-                    temp = c as DataGridView;
-            }
-            temp.DataSource = statistics;
-            temp.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            temp.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            foreach (DataGridViewColumn col in temp.Columns)
-            {
-                col.Width = 173;
-                try {
-                    col.HeaderText = dict[col.HeaderText];
+                try
+                {
+                    form.Invoke((MethodInvoker)(() => MessageBox.Show(ex.Message, "Error")));
                 }
                 catch
                 {
 
                 }
             }
+
+        }
+
+        private void ChangeDataSource(Form form, List<Statistic> statistics)
+        {
+         
+                DataGridView temp = new DataGridView();
+                Dictionary<string, string> dict = new Dictionary<string, string>() { { "Login", "Логин" }, { "Win", "Победы" }, { "Won", "Поражения" }, { "NF", "Ничьи" } };
+                foreach (Control c in form.Controls)
+                {
+                    if (!(c is TabControl)) continue;
+                    TabCont = c as TabControl;
+                }
+                foreach (Control c in TabCont.TabPages[1].Controls)
+                {
+                    if (c is DataGridView)
+                        temp = c as DataGridView;
+                }
+                temp.DataSource = statistics;
+                temp.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                temp.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                foreach (DataGridViewColumn col in temp.Columns)
+                {
+                    col.Width = 173;
+                    try {
+                        col.HeaderText = dict[col.HeaderText];
+                    }
+                    catch
+                    {
+
+                    }
+                }
+          
         }
 
         private void ChangeDataSource2(Form form, List<StatisticOnTask> statistics)
         {
-            DataGridView temp = new DataGridView();
-            Dictionary<string, string> dict = new Dictionary<string, string>() { { "DateOfStart", "Дата игры" }, { "TimeToPlay", "Длительность игры" }, { "Result", "Результат" }, { "X", "Фигура пользователя" },{ "CountOfStep", "Количество ходов пользователя" } };
-            foreach (Control c in form.Controls)
-            {
-                if (!(c is TabControl)) continue;
-                TabCont = c as TabControl;
-            }
-            foreach (Control c in TabCont.TabPages[2].Controls)
-            {
-                if (c is DataGridView)
-                    temp = c as DataGridView;
-            }
-            temp.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            temp.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            temp.Columns.Clear();
-            temp.Rows.Clear();
-            temp.AllowUserToAddRows = false;
-            temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText="Дата игры",Width=168});
-            temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Время игры", Width = 168 });
-            temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Результат", Width = 168 });
-            temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Фигура пользователя", Width = 168 });
-            temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Количество ходов пользователя", Width = 168 });
-            foreach (StatisticOnTask st in statistics)
-            {
-                DataGridViewRow c = new DataGridViewRow();
-                c.Cells.Add(new DataGridViewTextBoxCell());
-                c.Cells[0].Value = st.DateOfStart.ToString("d");
-                c.Cells.Add(new DataGridViewTextBoxCell());
-                c.Cells[1].Value = string.Format("{0:hh\\:mm\\:ss}", st.TimeToPlay);
-                c.Cells.Add(new DataGridViewTextBoxCell());
-                c.Cells[2].Value = ((st.Result == 0) ? "WinOfUser" : (st.Result == 1) ? "WinOfComputer" : "Draw");
-                c.Cells.Add(new DataGridViewTextBoxCell());
-                c.Cells[3].Value = ((st.X == 1) ? "X" : "O");
-                c.Cells.Add(new DataGridViewTextBoxCell());
-                c.Cells[4].Value = st.CountOfStep;
-                temp.Rows.Add(c);
-            }
+
+                DataGridView temp = new DataGridView();
+                Dictionary<string, string> dict = new Dictionary<string, string>() { { "DateOfStart", "Дата игры" }, { "TimeToPlay", "Длительность игры" }, { "Result", "Результат" }, { "X", "Фигура пользователя" }, { "CountOfStep", "Количество ходов пользователя" } };
+                foreach (Control c in form.Controls)
+                {
+                    if (!(c is TabControl)) continue;
+                    TabCont = c as TabControl;
+                }
+                foreach (Control c in TabCont.TabPages[2].Controls)
+                {
+                    if (c is DataGridView)
+                        temp = c as DataGridView;
+                }
+                temp.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                temp.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                temp.Columns.Clear();
+                temp.Rows.Clear();
+                temp.AllowUserToAddRows = false;
+                temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Дата игры", Width = 168 });
+                temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Время игры", Width = 168 });
+                temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Результат", Width = 168 });
+                temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Фигура пользователя", Width = 168 });
+                temp.Columns.Add(new DataGridViewTextBoxColumn() { HeaderText = "Количество ходов пользователя", Width = 168 });
+                foreach (StatisticOnTask st in statistics)
+                {
+                    DataGridViewRow c = new DataGridViewRow();
+                    c.Cells.Add(new DataGridViewTextBoxCell());
+                    c.Cells[0].Value = st.DateOfStart.ToString("d");
+                    c.Cells.Add(new DataGridViewTextBoxCell());
+                    c.Cells[1].Value = string.Format("{0:hh\\:mm\\:ss}", st.TimeToPlay);
+                    c.Cells.Add(new DataGridViewTextBoxCell());
+                    c.Cells[2].Value = ((st.Result == 0) ? "WinOfUser" : (st.Result == 1) ? "WinOfComputer" : "Draw");
+                    c.Cells.Add(new DataGridViewTextBoxCell());
+                    c.Cells[3].Value = ((st.X == 1) ? "X" : "O");
+                    c.Cells.Add(new DataGridViewTextBoxCell());
+                    c.Cells[4].Value = st.CountOfStep;
+                    temp.Rows.Add(c);
+                }
+            
             
             
         }

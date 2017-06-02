@@ -79,6 +79,7 @@ namespace ServerForGame.Classes
             JsonWorkerTask.WriteData(statistics, path);
             int pr=Convert.ToInt32(((float)statistics.Where(a => a.Result == 0).Count() / (float)statistics.Count()) * 100);
             HubWorker.BroadcastObjectTask(statistics,pr);
+           
         }
 
         #region PrivateSection
