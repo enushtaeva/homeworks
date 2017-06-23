@@ -1,0 +1,206 @@
+﻿@{
+    ViewBag.Title = "Агрегатор социальных сетей";
+}
+<div class="container">
+    <div class="row" id="search_panel">
+        <div class="input-field col s8 m6 offset-s2 offset-m3">
+            <input id="search_input" type="text" class="validate" value="@ViewBag.Query">
+            <label class="active" for="search_input">Введите поисковый запрос</label>
+            <div class="progress">
+                <div id ="progress_bar"></div>
+            </div>
+            <a class="waves-effect waves-light btn" id="search_button">Поиск</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col s12 m6 l4" id="col1">
+        </div>
+        <div class="col s12 m6 l4" id="col2">
+        </div>
+        <div class="col s12 m12 l4" id="col3">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col s2 m2 l2 offset-s4 offset-m4 offset-l4" id="more">
+            <a class="waves-effect waves-light btn" id="more_button">Ещё</a>
+        </div>
+        <div class="col s2 m2 l2">
+            <div class="preloader-wrapper big" id="load_more">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+
+            var result;
+
+            function fill(list) {
+                var cols = [$("#col1")];
+
+                if ($("#col2").offset().left > $("#col1").offset().left)
+                    cols.push($("#col2"));
+                if ($("#col3").offset().left > $("#col1").offset().left)
+                    cols.push($("#col3"));
+
+                var selectedCol = cols[0];
+
+                for (i = 0; i < list.length; i++) {
+
+                    var imageBlock = "";
+                    if (list[i].Image != "")
+                        imageBlock = '<div class="card-image">' +
+                                        '<img src="' + list[i].Image + '">' +
+                                    '</div>';
+                    var footer = "";
+                    if (list[i].AuthorName != "") {
+                        hours = "";
+                        if (new Date(list[i].Date).toLocaleTimeString().split(':')[0].length == 1) {
+                            hours = "0" + new Date(list[i].Date).toLocaleTimeString().split(':')[0];
+                        } else {
+                            hours = new Date(list[i].Date).toLocaleTimeString().split(':')[0];
+                        }
+                            footer = '<div class="row valign-wrapper">' +
+                                        '<div class="col s3 m3 l3">' +
+                                            '<img src="' + list[i].AuthorAvatar + '" alt="" class="circle responsive-img">' +
+                                        '</div>' +
+                                        '<div class="col s9 m9 l9">' +
+                                            '<p>' + list[i].AuthorName + '</p>' +
+                                            '<p>' + new Date(list[i].Date).toLocaleDateString() + '</p><p> ' + hours + ':' + new Date(list[i].Date).toLocaleTimeString().split(':')[1] + '</p>' +
+                                        '</div>' +
+                                    '</div>';
+
+                        
+                    }
+                    else {
+                        footer = '<p>' + new Date(list[i].Date).toLocaleDateString() + '</p>';
+                    }
+                    selectedCol.append(
+                        '<a href="' + list[i].PostLink + '" target="_blank">' +
+                            '<div class="card">' +
+                                imageBlock +
+                                '<div class="card-content">' +
+                                    '<div class="row valign-wrapper">' +
+                                        '<div class="col s2 m2 l2">' +
+                                            '<img src="/Content/' + list[i].Social + '.png" alt="" class="circle responsive-img">' +
+                                        '</div>' +
+                                        '<div class="col s9 m9 l9">' +
+                                            '<p>' + list[i].Social + '</p>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="card-content">' +
+                                    '<p>' + list[i].Text + '<p>' +
+                                '</div>' +
+                                '<div class="card-content">' +
+                                    footer +
+                                '</div>' +
+                            '</div>' +
+                        '</a>');
+
+                    var minHeight = selectedCol.height()
+
+                    cols.forEach(function (item, i, arr) {
+                        if (item.height() < minHeight) {
+                            selectedCol = item;
+                            minHeight = item.height();
+                        }
+                    });
+                }
+            };
+
+            function search() {
+
+                $("#search_panel").animate({
+                    "margin-top": 0
+                }, 500, function () {
+
+                });
+
+                $("#progress_bar").addClass("indeterminate");
+
+                $.ajax({
+                    type: "POST",
+                    url: '/Home/Search',
+                    data: { query: $("#search_input").val().toString() },
+                }).done(function (data) {
+
+                    $("#col1").empty();
+                    $("#col2").empty();
+                    $("#col3").empty();
+
+                    result = JSON.parse(data);
+
+                    if (result.Posts.length > 0) {
+                        fill(result.Posts);
+                        $("#more").show();
+                    }
+                    else {
+                        $("#more").hide();
+                    }
+
+                }).always(function () {
+                    $("#progress_bar").removeClass();
+                });
+            }
+
+            if ($("#search_input").val().toString() != "")
+                search();
+
+            $('#search_input').keyup(function (e) {
+                if (e.keyCode == 13) {
+                    search();
+                }
+            });
+
+            $("#search_button").click(function () {
+                search();
+            });
+
+            $("#more_button").click(function () {
+
+                $("#more_button").hide();
+
+                $("#load_more").addClass("active");
+
+                $.ajax({
+                    type: "POST",
+                    url: '/Home/More',
+                    data: {
+                        query: result.Query,
+                        vkPage: result.VKPagination, 
+                        instPage: result.InstPagination, 
+                        twPage: result.TwitterPagination },
+                }).done(function (data) {
+
+                    result = JSON.parse(data);
+                    fill(result.Posts);
+
+                }).always(function (data) {
+                    $("#more_button").show();
+                    $("#load_more").removeClass("active");
+                });
+            });
+
+        });
+    </script>
+}

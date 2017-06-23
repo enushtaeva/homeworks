@@ -1,0 +1,18 @@
+﻿p {
+    word-wrap: break-word;
+}
+.row {
+    margin-bottom: 0;
+}
+.col {
+    margin-bottom: 10px;
+}
+a {
+    color: black;
+}
+#more {
+    display: none;
+}
+#search_panel{
+    margin-top: 150px;
+}
