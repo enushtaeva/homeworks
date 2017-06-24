@@ -79,7 +79,7 @@ namespace VKSearcher
             string ownerID = vkPost.owner_id;
             string ID = vkPost.id;
             newPost.PostLink = "https://vk.com/" + screenName + "?w=wall" + ownerID + "_" + ID;
-
+            newPost.AuthorLink = "https://vk.com/" + screenName;
             lock (searchResult)
             {
                 searchResult.Add(newPost);

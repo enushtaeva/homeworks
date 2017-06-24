@@ -15,6 +15,8 @@ namespace SearchLibrary
 
         public string PostLink { get; set; }
 
+        public string AuthorLink { get; set; }
+
         [JsonConverter(typeof(StringEnumConverter))]
         public SocialMedia Social { get; set; }
 

@@ -24,7 +24,7 @@ namespace InstagramSearcher
             double sec = instagramPost.date;
             newPost.Date = (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).AddSeconds(sec);
             newPost.PostLink = "https://www.instagram.com/p/" + instagramPost.code;
-
+            
             var request = (HttpWebRequest)WebRequest.Create(newPost.PostLink + "/?__a=1");
             var response = (HttpWebResponse)request.GetResponse();
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
@@ -32,6 +32,7 @@ namespace InstagramSearcher
             var instAuthor = instPostData.graphql.shortcode_media.owner;
 
             newPost.AuthorName = instAuthor.username;
+            newPost.AuthorLink = "https://www.instagram.com/" + newPost.AuthorName;
             newPost.AuthorAvatar = instAuthor.profile_pic_url;
             newPost.Social = SocialMedia.Instagram;
 

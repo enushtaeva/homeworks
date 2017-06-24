@@ -49,6 +49,7 @@ namespace TwitterSearcher.Services
             tweet.AuthorName = item.QuerySelectorAll("div").Where(k => k.ClassName.Contains("tweet")).First().Attributes["data-name"].Value;
             string linkname = item.QuerySelectorAll("div").Where(k => k.ClassName.Contains("tweet")).First().Attributes["data-screen-name"].Value;
             tweet.PostLink = "https://twitter.com/" + linkname + "/status/" + id;
+            tweet.AuthorLink = "https://twitter.com/" + linkname;
             tweet.AuthorAvatar = item.QuerySelectorAll("img").Where(y => y.ClassName.Contains("avatar")).First().Attributes["src"].Value;
             try
             {
