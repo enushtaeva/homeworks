@@ -82,8 +82,20 @@
                         hours = new Date(list[0].Date).toLocaleTimeString().split(':')[0];
                     }
                     if (list[0].AuthorName != "") {
-                        footer = '<div class="row valign-wrapper">' + '<a href="' + list[0].PostLink + '" target="_blank">' +
-                                        '<div class="col s9 m9 l9">' +
+                        if (list[0].Social == "Twitter")
+
+                            footer = '<div class="row valign-wrapper card-action">' + '<a href="' + list[0].PostLink + '" target="_blank">' +
+                                            '<div class="col s15 m15 l15">' +
+                                                '<img src="' + list[0].AuthorAvatar + '" alt="" class="circle responsive-img">' +
+                                            '</div></a>' +
+                                            '<div class="col s9 m9 l9 mylink2 " id="' + list[0].PostLink + '" onClick="window.open(this.id)">' +
+                                                '<p class="myownlink" id="' + list[0].AuthorLink + '" onClick="window.open(this.id)">' + list[0].AuthorName + '</p>' +
+                                                '<p>' + new Date(list[0].Date).toLocaleDateString() + '</p><p> ' + hours + ':' + new Date(list[0].Date).toLocaleTimeString().split(':')[1] + '</p>' +
+                                            '</div>' +
+                                        '</div>';
+                        else if (list[0].Social == "VK")
+                        footer = '<div class="row valign-wrapper card-action">' + '<a href="' + list[0].PostLink + '" target="_blank">' +
+                                        '<div class="col s12 m12 l12">'+
                                             '<img src="' + list[0].AuthorAvatar + '" alt="" class="circle responsive-img">' +
                                         '</div></a>' +
                                         '<div class="col s9 m9 l9 mylink2 " id="' + list[0].PostLink + '" onClick="window.open(this.id)">' +
@@ -91,6 +103,16 @@
                                             '<p>' + new Date(list[0].Date).toLocaleDateString() + '</p><p> ' + hours + ':' + new Date(list[0].Date).toLocaleTimeString().split(':')[1] + '</p>' +
                                         '</div>' +
                                     '</div>';
+                        else if (list[0].Social == "Instagram")
+                            footer = '<div class="row valign-wrapper card-action">' + '<a href="' + list[0].PostLink + '" target="_blank">' +
+                                      '<div class="col s11 m11 l11">' +
+                                          '<img src="' + list[0].AuthorAvatar + '" alt="" class="circle responsive-img">' +
+                                      '</div></a>' +
+                                      '<div class="col s9 m9 l9 mylink2 " id="' + list[0].PostLink + '" onClick="window.open(this.id)">' +
+                                          '<p class="myownlink" id="' + list[0].AuthorLink + '" onClick="window.open(this.id)">' + list[0].AuthorName + '</p>' +
+                                          '<p>' + new Date(list[0].Date).toLocaleDateString() + '</p><p> ' + hours + ':' + new Date(list[0].Date).toLocaleTimeString().split(':')[1] + '</p>' +
+                                      '</div>' +
+                                  '</div>';
 
                         
                     }
@@ -98,7 +120,7 @@
                         footer = '<p>' + new Date(list[0].Date).toLocaleDateString() + '</p><p> ' + hours + ':' + new Date(list[0].Date).toLocaleTimeString().split(':')[1] + '</p>';
                     }
                     selectedCol.append(
-                            '<div class="card">' +
+                            '<div class="card" style="cursor:pointer;" id="' + list[0].PostLink + '" onClick="window.open(this.id)">' +
                                 imageBlock + '<a href="' + list[0].PostLink + '" target="_blank">' +
                                 '<div class="card-content">' +
                                     '<div class="row valign-wrapper">' +
