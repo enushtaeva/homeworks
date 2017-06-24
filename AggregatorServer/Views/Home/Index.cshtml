@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Агрегатор социальных сетей";
 }
+
 <div class="container">
     <div class="row" id="search_panel">
         <div class="input-field col s8 m6 offset-s2 offset-m3">
@@ -9,11 +10,42 @@
             <div class="progress">
                 <div id ="progress_bar"></div>
             </div>
-            <a class="waves-effect waves-light btn" id="search_button">Поиск</a>
+            <a class="waves-effect waves-light btn" id="search_button">Поиск</a>&nbsp&nbsp
+            <a class="waves-effect waves-light btn  modal-trigger" id="account_button" href="#modal1">Войти</a>
         </div>
     </div>
 </div>
 
+
+
+<div id="modal1" class="modal" style="overflow:hidden;">
+    <div class="modal-content">
+        <h4 style="text-align:center;">Вход</h4>
+            <div class="row">
+                <form class="col s19 m12 l10" id="myform">
+                    <div class="row">
+                        <div class="input-field col  offset-s2 offset-m3 offset-l4 s10 m6 l6" >
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="icon_prefix" type="text" class="validate">
+                            <label for="icon_prefix">Логин</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col   offset-s2 offset-m3 offset-l4 s10  m6 l6">
+                            <i class="material-icons prefix">vpn_key</i>
+                            <input id="icon_telephone" type="tel" class="validate" >
+                            <label for="icon_telephone">Пароль</label>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    <div class="modal-footer">
+        <a class="waves-effect waves-light btn  modal-trigger" id="autorize">Вход</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn waves-light" style="margin-right:2%">Закрыть</a>
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
@@ -204,7 +236,7 @@
             $("#search_button").click(function () {
                 search();
             });
-
+       
            
             
             $(window).scroll(function () {
@@ -264,8 +296,13 @@
            
         
         });
-        function f() {
-            alert("hello");
-        };
+     
+        $('.modal-trigger').leanModal();
+        $('#icon_prefix').keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                $("#icon_telephone").focus();
+            }
+        });
     </script>
 }

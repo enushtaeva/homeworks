@@ -61,6 +61,16 @@ namespace AggregatorServer.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap account_circle_black_192x192 {
+            get {
+                object obj = ResourceManager.GetObject("account_circle_black_192x192", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на 6ля
         ///6лядь
         ///6лять

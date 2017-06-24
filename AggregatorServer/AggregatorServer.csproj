@@ -186,6 +186,7 @@
     <Content Include="Content\materialize\fonts\roboto\Roboto-Bold.eot" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <None Include="Resources\badwords.txt" />
+    <None Include="Resources\account_circle_black_192x192.png" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
