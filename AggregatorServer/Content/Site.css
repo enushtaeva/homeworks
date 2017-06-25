@@ -1,0 +1,33 @@
+﻿p {
+    word-wrap: break-word;
+}
+.row {
+    margin-bottom: 0;
+}
+.col {
+    margin-bottom: 10px;
+}
+a {
+    color: black;
+}
+#more {
+    display: none;
+}
+#search_panel{
+    margin-top: 150px;
+}
+.myownlink{
+    cursor:pointer;
+}
+.myownlink:hover{
+    text-decoration:underline;
+}
+.mylink2{
+ cursor:pointer;
+}
+.loader {
+  position:fixed;
+  top:50%;
+  left:50%;
+  -webkit-transform:translate(-50%,-50%);
+}
