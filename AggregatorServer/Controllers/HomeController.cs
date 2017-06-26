@@ -6,6 +6,10 @@ using SearchLibrary;
 using System.Collections.Generic;
 using System.Threading;
 using AggregatorServer.DBContext;
+using System.Text;
+using System.Security.Cryptography;
+using System;
+using System.Linq;
 
 namespace AggregatorServer.Controllers
 {
@@ -46,13 +50,21 @@ namespace AggregatorServer.Controllers
             return JsonConvert.SerializeObject(aggregator.More(query, vkPage, instPage, twPage));
         }
 
+        [ValidateInput(false)]
         [HttpPost]
-        public string RegisterTag(string query)
+        public string RegisterTag(string query,byte[] hash, string key)
         {
-            Thread cashThread = new Thread(() => Cashing.Start(query));
-            cashThread.Start();
-            AggregatorModel aggregator = new AggregatorModel();
-            return JsonConvert.SerializeObject(aggregator.Search(query));
+            string res =Decode(hash, key);
+            DBWorker dbworker = new DBWorker();
+            List<User> s = dbworker.GetUserByLoginPassword(res);
+            if (s.Count > 0)
+            {
+                return JsonConvert.SerializeObject(Cashing.Cash(query));
+            }
+            else
+            {
+                return "unregistred";
+            }
         }
 
         [HttpPost]
@@ -67,6 +79,62 @@ namespace AggregatorServer.Controllers
             {
                 return "";
             }
+        }
+        [HttpPost]
+        public string Register(string login, string password)
+        {
+             List<User> us = (new DBWorker()).GetUserByLoginPassword(login + password);
+             if (us.Count != 0)
+             {
+                 string key = "";
+                 var res = Encode(login + password, out key);
+                 string res2 = string.Join("", res.Select(x => x.ToString("X2")));
+                 CodeResult cr = new CodeResult();
+                 cr.Key = key;
+                 cr.Hash = res;
+                 return JsonConvert.SerializeObject(cr);
+             }
+             else
+             {
+                 return "bad";
+             }
+            
+        }
+        [ValidateInput(false)]
+        [HttpPost]
+        public string Register2(byte[] hash, string key)
+        {
+            try {
+                string res = Decode(hash, key);
+                DBWorker dbworker = new DBWorker();
+                List<User> s = dbworker.GetUserByLoginPassword(res);
+                if (s.Count > 0)
+                {
+                    return "yes";
+                }
+                else
+                {
+                    return "unregistred";
+                }
+            }
+            catch
+            {
+                return "unregistred";
+            }
+
+        }
+        private static byte[] Encode(string str,out string key)
+        {
+            var provider = new RSACryptoServiceProvider();
+            key = provider.ToXmlString(true);
+            return provider.Encrypt(Encoding.UTF8.GetBytes(str), true);
+        }
+
+        private static string Decode(byte[] bytes,string key)
+        {
+            var provider = new RSACryptoServiceProvider();
+            provider.FromXmlString(key);
+            return Encoding.UTF8.GetString(provider.Decrypt(bytes, true));
         }
     }
 }

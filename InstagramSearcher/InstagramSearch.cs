@@ -46,7 +46,7 @@ namespace InstagramSearcher
         {
             if (pageInfo != "") pageInfo = "&max_id=" + pageInfo;
 
-            var request = (HttpWebRequest)WebRequest.Create("https://www.instagram.com/explore/tags/" + query + "/?__a=1" + pageInfo);
+            var request = (HttpWebRequest)WebRequest.Create("https://www.instagram.com/explore/tags/" + query + "/?__a=1&lg=fr" + pageInfo);
 
             HttpWebResponse response;
             try

@@ -90,7 +90,7 @@ namespace VKSearcher
         {
             if (pageInfo != "") pageInfo = "&start_from=" + pageInfo;
 
-            var request = (HttpWebRequest)WebRequest.Create("https://api.vk.com/method/newsfeed.search?q=%23" + query + "&count=20&extended=1&access_token=9123309e9123309e9123309ecb917ffb61991239123309ec86b359fe8d192ce5c598a50&v=5.65" + pageInfo);
+            var request = (HttpWebRequest)WebRequest.Create("https://api.vk.com/method/newsfeed.search?q=%23" + query + "&lang=ru&count=20&extended=1&access_token=9123309e9123309e9123309ecb917ffb61991239123309ec86b359fe8d192ce5c598a50&v=5.65" + pageInfo);
 
             HttpWebResponse response;
             try

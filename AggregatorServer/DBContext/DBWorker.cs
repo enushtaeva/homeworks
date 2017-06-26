@@ -100,5 +100,17 @@ namespace AggregatorServer.DBContext
             }
         }
 
+       public List<User> GetUserByLoginPassword(string str)
+        {
+            using (SqlConnection cn = new SqlConnection())
+            {
+                using (AdminContext db = new AdminContext())
+                {
+                    return db.Users.Where(x=>x.Login+x.Password== str).ToList();
+                  
+                }
+
+            }
+        }
     }
 }
