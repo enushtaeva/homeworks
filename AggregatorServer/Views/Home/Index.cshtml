@@ -122,8 +122,10 @@
                         $('#modal1').closeModal({ dismissible: true });
                         $("#account_button").html("Выйти");
                         $("#search").append('<br><p style="display:inline-block;margin-right:2%;" id="rgtg"><a class="waves-effect waves-light btn" style="font-size:70%;" onClick="regtag()" >Зарегистрировать тег</a></p>');
-                        $("#search").append('<p style="display:inline-block; margin-top:0%;" id="rgus"><a class="waves-effect waves-light btn  modal-trigger" style="font-size:70%;" href="#modal1" onClick="reguser()">Добавить пользователя</a></p>');
+                        $("#search").append('<p style="display:inline-block; margin-top:0%;" id="rgus"><a id="mdl5" class="waves-effect waves-light btn  modal-trigger" style="font-size:70%;" href="#modal1" onClick="reguser()">Добавить пользователя</a></p>');
                         $("#account_button").unbind();
+                        $('#mdl5').leanModal();
+                        $("#account_button").removeClass("modal-trigger");
                         $("#account_button").html("Выйти");
                         $("#account_button").click(function () {
                             var options = { path: '/' };
@@ -157,43 +159,46 @@
                                         block2 = false;
                                         return;
                                     }
+                                    $("#connectdatabase").addClass("active");
                                     $.ajax({
                                         type: "POST",
                                         url: '/Home/Register',
                                         data: { login: $("#icon_prefix").val().toString(), password: $("#icon_telephone").val().toString() },
                                     }).done(function (data) {
                                         if (data != "bad") {
-                                            $("#load_more").removeClass("active");
-                                            $("#bdsuccess").removeClass("hide");
+                                            $("#accesserror").addClass("hide");
                                             res = JSON.parse(data);
-                                            console.log(res.Hash);
                                             var options = { path: '/' };
                                             setCookie("hash", res.Hash, options);
-                                            console.log(getCookie("hash"));
                                             setCookie("key", res.Key, options);
-                                            console.log(getCookie("key"));
                                             $('#modal1').closeModal({ dismissible: true });
                                             $("#account_button").html("Выйти");
+                                            $("#account_button").removeClass("modal-trigger");
                                             $("#search").append('<br><p style="display:inline-block;margin-right:2%;" id="rgtg"><a class="waves-effect waves-light btn" style="font-size:70%;" onClick="regtag()" >Зарегистрировать тег</a></p>');
-                                            $("#search").append('<p style="display:inline-block; margin-top:0%;" id="rgus"><a class="waves-effect waves-light btn  modal-trigger" style="font-size:70%;" href="#modal1" onClick="reguser()">Добавить пользователя</a></p>');
-                                            $('.modal-trigger').leanModal();
+                                            $("#search").append('<p style="display:inline-block; margin-top:0%;" id="rgus"><a class="waves-effect waves-light btn  modal-trigger" style="font-size:70%;" href="#modal1" onClick="reguser()" id="mdal5">Добавить пользователя</a></p>');
+                                            $("#bdsuccess").addClass("hide");
+                                            $("#bderror").addClass("hide");
+                                            $('#mdal5').leanModal();
                                             $("#account_button").unbind();
                                             $("#account_button").click(function () {
                                                 var options = { path: '/' };
                                                 setCookie("hash", "", options);
                                                 setCookie("key", "", options);
+                                                $("#account_button").addClass("modal-trigger");
                                                 $("#account_button").leanModal();
                                                 $("#account_button").html("Войти");
                                                 $("#rgtg").remove();
                                                 $("#rgus").remove();
+                                                $("#headeruser").html("Вход");
+                                                $("#autorize").html("Войти");
+
                                             });
                                         } else {
-
+                                            $("#bdsuccess").addClass("hide");
                                             $("#accesserror").removeClass("hide");
 
 
                                         }
-                                        $("#connectdatabase").removeClass("active");
                                     }).always(function () {
                                         $("#connectdatabase").removeClass("active");
                                         block2 = false;
@@ -350,7 +355,7 @@
                         }).done(function (data) {
                             if (data != "bad") {
                                 $("#load_more").removeClass("active");
-                                $("#bdsuccess").removeClass("hide");
+                                $("#accesserror").addClass("hide");
                                 res = JSON.parse(data);
                                 console.log(res.Hash);
                                 var options = { path: '/' };
@@ -360,9 +365,10 @@
                                 console.log(getCookie("key"));
                                 $('#modal1').closeModal({ dismissible: true });
                                 $("#account_button").html("Выйти");
+                                $("#account_button").removeClass("modal-trigger");
                                 $("#search").append('<br><p style="display:inline-block;margin-right:2%;" id="rgtg"><a class="waves-effect waves-light btn" style="font-size:70%;" onClick="regtag()" >Зарегистрировать тег</a></p>');
-                                $("#search").append('<p style="display:inline-block; margin-top:0%;" id="rgus"><a class="waves-effect waves-light btn  modal-trigger" style="font-size:70%;" href="#modal1" onClick="reguser()">Добавить пользователя</a></p>');
-                                $('.modal-trigger').leanModal();
+                                $("#search").append('<p style="display:inline-block; margin-top:0%;" id="rgus"><a id="mdl5" class="waves-effect waves-light btn  modal-trigger" style="font-size:70%;" href="#modal1" onClick="reguser()">Добавить пользователя</a></p>');
+                                $('#mdl5').leanModal();
                                 $("#account_button").unbind();
                                 $("#account_button").click(function () {
                                     var options = { path: '/' };
@@ -370,6 +376,7 @@
                                     setCookie("key", "", options);
                                     $("#account_button").leanModal();
                                     $("#account_button").html("Войти");
+                                    $("#account_button").addClass("modal-trigger");
                                     $("#rgtg").remove();
                                     $("#rgus").remove();
                                     $("#autorize").unbind();
@@ -414,9 +421,10 @@
                                                     $('#modal1').closeModal({ dismissible: true });
                                                     $("#account_button").html("Выйти");
                                                     $("#search").append('<br><p style="display:inline-block;margin-right:2%;" id="rgtg"><a class="waves-effect waves-light btn" style="font-size:70%;" onClick="regtag()" >Зарегистрировать тег</a></p>');
-                                                    $("#search").append('<p style="display:inline-block; margin-top:0%;" id="rgus"><a class="waves-effect waves-light btn  modal-trigger" style="font-size:70%;" href="#modal1" onClick="reguser()">Добавить пользователя</a></p>');
-                                                    $('.modal-trigger').leanModal();
+                                                    $("#search").append('<p style="display:inline-block; margin-top:0%;" id="rgus"><a id="mdl5" class="waves-effect waves-light btn  modal-trigger" style="font-size:70%;" href="#modal1" onClick="reguser()">Добавить пользователя</a></p>');
+                                                    $('#mdl5').leanModal();
                                                     $("#account_button").unbind();
+                                                    $("#account_button").removeClass("modal-trigger");
                                                     $("#account_button").click(function () {
                                                         var options = { path: '/' };
                                                         setCookie("hash", "", options);
@@ -426,13 +434,11 @@
                                                         $("#rgtg").remove();
                                                         $("#rgus").remove();
                                                     });
+                                                    $("#accesserror").addClass("hide");
                                                 } else {
-
+                                                    $("#bdsuccess").addClass("hide");
                                                     $("#accesserror").removeClass("hide");
-
-
                                                 }
-                                                $("#connectdatabase").removeClass("active");
                                             }).always(function () {
                                                 $("#connectdatabase").removeClass("active");
                                                 block2 = false;
@@ -441,13 +447,14 @@
 
                                     });
                                 });
+                                $("#accesserror").addClass("hide");
                             } else {
 
                                 $("#accesserror").removeClass("hide");
                               
                                
                             }
-                            $("#connectdatabase").removeClass("active");
+                           
                         }).always(function () {
                             $("#connectdatabase").removeClass("active");
                             block2 = false;
@@ -498,7 +505,8 @@
                 }
 
                 function reguser() {
-
+                    $("#bdsuccess").addClass("hide");
+                    $("#bderror").addClass("hide");
                     $("#autorize").unbind();
                     $("#autorize").html("Добавить");
                     $("#headeruser").html("Добавление пользователя");
@@ -518,7 +526,7 @@
                         }
                         $("#bdsuccess").addClass("hide");
                         $("#bderrr").addClass("hide");
-                        $("#load_more").addClass("active");
+                        $("#connectdatabase").addClass("active");
                         $.ajax({
                             type: "POST",
                             url: '/Home/RegisterUser',
@@ -526,11 +534,13 @@
                         }).done(function (data) {
                             if (data == "success") {
 
-                                $("#load_more").removeClass("active");
+                                $("#connectdatabase").removeClass("active");
                                 $("#bdsuccess").removeClass("hide");
+                                $("#bderror").addClass("hide");
                             } else {
+                                $("#bdsuccess").addClass("hide");
                                 $("#bderror").removeClass("hide");
-                                $("#load_more").removeClass("active");
+                                $("#connectdatabase").removeClass("active");
                             }
                         });
                     });
